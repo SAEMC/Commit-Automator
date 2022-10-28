@@ -4,12 +4,12 @@
 
 
 import os
+import json
 import itertools
 from typing import Union
 from datetime import datetime
 
 import httpx
-import json
 from bs4 import BeautifulSoup as bs
 
 
