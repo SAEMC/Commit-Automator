@@ -96,11 +96,11 @@ def auto_commit(need_to_commit: int) -> None:
         print(f"Auto Commit: {count + 1}")
         os.system("echo commit-automator >>commit-automator.txt")
         os.system("git add commit-automator.txt")
-        os.system("git commit -m 'auto commit'")
+        os.system("git commit -m 'Commit Automator'")
 
     os.system("rm commit-automator.txt")
     os.system("git add commit-automator.txt")
-    os.system("git commit -m 'auto commit'")
+    os.system("git commit -m 'Commit Automator'")
     os.system("git push")
     print(f"Done!")
 
