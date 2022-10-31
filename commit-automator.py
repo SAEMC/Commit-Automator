@@ -3,9 +3,10 @@
 # Date: 2022-10-27
 
 
-import os
+# import os
 import json
 import itertools
+import subprocess
 from typing import Union
 from datetime import datetime
 
@@ -29,9 +30,9 @@ def get_art(art_path: str) -> dict:
     with open(art_path) as f:
         data = json.load(f)
 
-    start_day = datetime.strptime(data["start_date"], "%Y-%m-%d").strftime("%a")
-    if start_day != "Sun":
-        raise ValueError("'start_date' must start from Sunday!")
+    # start_day = datetime.strptime(data["start_date"], "%Y-%m-%d").strftime("%a")
+    # if start_day != "Sun":
+    #     raise ValueError("'start_date' must start from Sunday!")
 
     if data["duration"] != len(data["pixels_level"]):
         raise ValueError("'duration' must be same with 'pixels_level'!")
@@ -45,7 +46,7 @@ def get_date_delta(today: str, start_date: str) -> int:
     date_delta = (today - start_date).days
 
     if date_delta < 0:
-        raise ValueError("'date_delta' must be greater than or equal to 0!")
+        raise ValueError("'start_date' of 'art.json' must be earlier than today !")
 
     return date_delta
 
@@ -60,7 +61,7 @@ def get_pixel_level(date_delta: int, pixels_level: list) -> int:
 
 
 def get_commit_num(pixel_level: int, date_count: Union[int, None]) -> int:
-    if date_count:
+    if date_count is not None:
         if date_count < 1:
             date_level = 0
         elif date_count < 15:
@@ -72,7 +73,7 @@ def get_commit_num(pixel_level: int, date_count: Union[int, None]) -> int:
         else:
             date_level = 4
     else:
-        raise ValueError("'date_count' must be int!")
+        raise ValueError("Cannot find commit count in Github now.. try later.")
 
     if pixel_level > date_level:
         if pixel_level == 1:
@@ -86,23 +87,23 @@ def get_commit_num(pixel_level: int, date_count: Union[int, None]) -> int:
 
         need_to_commit = min_commit - date_count
     else:
-        raise ValueError("Nothing to commit!")
+        raise ValueError("Enough today.. nothing to commit.")
 
     return need_to_commit
 
 
-def auto_commit(need_to_commit: int) -> None:
+def auto_commit(art_name: str, need_to_commit: int) -> None:
     for count in range(need_to_commit):
         print(f"Auto Commit: {count + 1}")
-        os.system("echo commit-automator >>commit-automator.txt")
-        os.system("git add commit-automator.txt")
-        os.system("git commit -m 'Commit Automator'")
+        subprocess.call("echo commit-automator >>commit-automator.txt")
+        subprocess.call("git add commit-automator.txt")
+        subprocess.call(f"git commit -m 'Commit Automator for {art_name}'")
 
-    os.system("rm commit-automator.txt")
-    os.system("git add commit-automator.txt")
-    os.system("git commit -m 'Commit Automator'")
-    os.system("git push")
-    print(f"Done!")
+    subprocess.call("rm commit-automator.txt")
+    subprocess.call("git add commit-automator.txt")
+    subprocess.call(f"git commit -m 'Commit Automator for {art_name}'")
+    subprocess.call("git push")
+    print(f"Nice.. done.")
 
 
 def main():
@@ -117,11 +118,12 @@ def main():
     pixel_level = get_pixel_level(date_delta, pixels_level)
 
     date_count = github_data.get(today, None)
-    print(f"Github commits: {date_count}")
+    print(f"Github commits today: {date_count}")
     need_to_commit = get_commit_num(pixel_level, date_count)
-    print(f"Need to commit: {need_to_commit}")
+    print(f"Need to commit more: {need_to_commit}")
 
-    auto_commit(need_to_commit)
+    art_name = art_data["name"]
+    auto_commit(art_name, need_to_commit)
 
 
 if __name__ == "__main__":
