@@ -3,7 +3,7 @@
 # Date: 2022-10-27
 
 
-# import os
+import os
 import json
 import itertools
 import subprocess
@@ -11,28 +11,58 @@ from typing import Union
 from datetime import datetime
 
 import httpx
-from bs4 import BeautifulSoup as bs
 
 
-def get_github(url: str) -> dict:
-    page = httpx.get(url)
-    soup = bs(page.text, "html.parser")
-    calendar = soup.find_all("rect", {"class": "ContributionCalendar-day"})
+def get_github(access_token: str) -> dict:
+    with httpx.Client() as client:
+        url = "https://api.github.com/graphql"
+        headers = {
+            "Content-Type": "application/graphql",
+            "Authorization": "Bearer " + access_token,
+        }
+        body = """
+        query {
+            user(login: "SAEMC") {
+                contributionsCollection {
+                    contributionCalendar {
+                        totalContributions weeks {
+                            contributionDays {
+                                contributionCount date
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        """
 
-    return {
-        e.get("data-date"): int(e.get("data-count"))
-        for e in calendar
-        if e.get("data-date")
-    }
+        response = client.post(url=url, headers=headers, json={"query": body})
+
+    if response.status_code == 200:
+        result = response.json()["data"]["user"]["contributionsCollection"][
+            "contributionCalendar"
+        ]["weeks"]
+        contribution_days = [
+            values for element in result for values in element.values()
+        ]
+        contribution_days = list(itertools.chain(*contribution_days))
+
+        return {
+            element.get("date"): int(element.get("contributionCount"))
+            for element in contribution_days
+            if element.get("date")
+        }
+    else:
+        raise ValueError(f"'status_code' is {response.status_code}!")
 
 
 def get_art(art_path: str) -> dict:
     with open(art_path) as f:
         data = json.load(f)
 
-    # start_day = datetime.strptime(data["start_date"], "%Y-%m-%d").strftime("%a")
-    # if start_day != "Sun":
-    #     raise ValueError("'start_date' must start from Sunday!")
+    start_day = datetime.strptime(data["start_date"], "%Y-%m-%d").strftime("%a")
+    if start_day != "Sun":
+        raise ValueError("'start_date' must start from Sunday!")
 
     if data["duration"] != len(data["pixels_level"]):
         raise ValueError("'duration' must be same with 'pixels_level'!")
@@ -107,7 +137,9 @@ def auto_commit(art_name: str, need_to_commit: int) -> None:
 
 
 def main():
-    github_data = get_github("https://github.com/SAEMC/")
+    access_token = os.environ["myGithubAccessToken"]
+
+    github_data = get_github(access_token)
     art_data = get_art("art.json")
 
     today = datetime.today().strftime("%Y-%m-%d")
