@@ -115,11 +115,11 @@ def getCommitCount(pixel_level: int, date_count: Union[int, None]) -> int:
         else:
             min_commit = 45
 
-        need_to_commit = min_commit - date_count
+        commit_count = min_commit - date_count
     else:
         raise ValueError("Enough today.. nothing to commit.")
 
-    return need_to_commit
+    return commit_count
 
 
 def commitAndPush(art_name: str, commit_count: int) -> None:
