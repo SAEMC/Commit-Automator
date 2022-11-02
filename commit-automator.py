@@ -13,7 +13,7 @@ from datetime import datetime
 import httpx
 
 
-def get_github(access_token: str) -> dict:
+def getGithubData(access_token: str) -> dict:
     with httpx.Client() as client:
         url = "https://api.github.com/graphql"
         headers = {
@@ -56,7 +56,7 @@ def get_github(access_token: str) -> dict:
         raise ValueError(f"'status_code' is {response.status_code}!")
 
 
-def get_art(art_path: str) -> dict:
+def getArtData(art_path: str) -> dict:
     with open(art_path) as f:
         data = json.load(f)
 
@@ -70,7 +70,7 @@ def get_art(art_path: str) -> dict:
     return data
 
 
-def get_date_delta(today: str, start_date: str) -> int:
+def getDateDelta(today: str, start_date: str) -> int:
     today = datetime.strptime(today, "%Y-%m-%d")
     start_date = datetime.strptime(start_date, "%Y-%m-%d")
     date_delta = (today - start_date).days
@@ -81,7 +81,7 @@ def get_date_delta(today: str, start_date: str) -> int:
     return date_delta
 
 
-def get_pixel_level(date_delta: int, pixels_level: list) -> int:
+def getPixelLevel(date_delta: int, pixels_level: list) -> int:
     flatten_pixels_level = list(itertools.chain(*pixels_level))
     total_pixels = len(flatten_pixels_level)
     pixel_idx = date_delta % total_pixels
@@ -90,7 +90,7 @@ def get_pixel_level(date_delta: int, pixels_level: list) -> int:
     return pixel_level
 
 
-def get_commit_num(pixel_level: int, date_count: Union[int, None]) -> int:
+def getCommitCount(pixel_level: int, date_count: Union[int, None]) -> int:
     if date_count is not None:
         if date_count < 1:
             date_level = 0
@@ -122,8 +122,8 @@ def get_commit_num(pixel_level: int, date_count: Union[int, None]) -> int:
     return need_to_commit
 
 
-def auto_commit(art_name: str, need_to_commit: int) -> None:
-    for count in range(need_to_commit):
+def commitAndPush(art_name: str, commit_count: int) -> None:
+    for count in range(commit_count):
         print(f"Auto Commit: {count + 1}")
         subprocess.call("echo commit-automator >>commit-automator.txt")
         subprocess.call("git add commit-automator.txt")
@@ -139,23 +139,23 @@ def auto_commit(art_name: str, need_to_commit: int) -> None:
 def main():
     access_token = os.environ["myGithubAccessToken"]
 
-    github_data = get_github(access_token)
-    art_data = get_art("art.json")
+    github_data = getGithubData(access_token)
+    art_data = getArtData("art.json")
 
     today = datetime.today().strftime("%Y-%m-%d")
     start_date = art_data["start_date"]
-    date_delta = get_date_delta(today, start_date)
+    date_delta = getDateDelta(today, start_date)
 
     pixels_level = art_data["pixels_level"]
-    pixel_level = get_pixel_level(date_delta, pixels_level)
+    pixel_level = getPixelLevel(date_delta, pixels_level)
 
     date_count = github_data.get(today, None)
     print(f"Github commits today: {date_count}")
-    need_to_commit = get_commit_num(pixel_level, date_count)
-    print(f"Need to commit more: {need_to_commit}")
+    commit_count = getCommitCount(pixel_level, date_count)
+    print(f"Need to commit more: {commit_count}")
 
     art_name = art_data["name"]
-    auto_commit(art_name, need_to_commit)
+    commitAndPush(art_name, commit_count)
 
 
 if __name__ == "__main__":
