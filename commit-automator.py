@@ -13,27 +13,27 @@ from datetime import datetime
 import httpx
 
 
-def getGithubData(access_token: str) -> dict:
+def getGithubData(user_name: str, access_token: str) -> dict:
     with httpx.Client() as client:
         url = "https://api.github.com/graphql"
         headers = {
             "Content-Type": "application/graphql",
             "Authorization": "Bearer " + access_token,
         }
-        body = """
-        query {
-            user(login: "SAEMC") {
-                contributionsCollection {
-                    contributionCalendar {
-                        totalContributions weeks {
-                            contributionDays {
+        body = f"""
+        query {{
+            user(login: "{user_name}") {{
+                contributionsCollection {{
+                    contributionCalendar {{
+                        totalContributions weeks {{
+                            contributionDays {{
                                 contributionCount date
-                            }
-                        }
-                    }
-                }
-            }
-        }
+                            }}
+                        }}
+                    }}
+                }}
+            }}
+        }}
         """
 
         response = client.post(url=url, headers=headers, json={"query": body})
@@ -137,9 +137,10 @@ def commitAndPush(art_name: str, commit_count: int) -> None:
 
 
 def main():
+    user_name = "SAEMC"
     access_token = os.environ["myGithubAccessToken"]
 
-    github_data = getGithubData(access_token)
+    github_data = getGithubData(user_name, access_token)
     art_data = getArtData("art.json")
 
     today = datetime.today().strftime("%Y-%m-%d")
