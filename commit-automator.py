@@ -125,14 +125,14 @@ def getCommitCount(pixel_level: int, date_count: Union[int, None]) -> int:
 def commitAndPush(art_name: str, commit_count: int) -> None:
     for count in range(commit_count):
         print(f"Auto Commit: {count + 1}")
-        subprocess.call("echo commit-automator >>commit-automator.txt")
-        subprocess.call("git add commit-automator.txt")
-        subprocess.call(f"git commit -m 'Commit Automator for {art_name}'")
+        subprocess.call("echo commit-automator >>commit-automator.txt", shell=True)
+        subprocess.call("git add commit-automator.txt", shell=True)
+        subprocess.call(f"git commit -m 'Commit Automator for {art_name}'", shell=True)
 
-    subprocess.call("rm commit-automator.txt")
-    subprocess.call("git add commit-automator.txt")
-    subprocess.call(f"git commit -m 'Commit Automator for {art_name}'")
-    subprocess.call("git push")
+    subprocess.call("rm commit-automator.txt", shell=True)
+    subprocess.call("git add commit-automator.txt", shell=True)
+    subprocess.call(f"git commit -m 'Commit Automator for {art_name}'", shell=True)
+    subprocess.call("git push", shell=True)
     print(f"Nice.. done.")
 
 
