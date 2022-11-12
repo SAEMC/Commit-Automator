@@ -140,11 +140,12 @@ def main():
     abs_path = os.path.abspath(__file__)
     abs_dir = os.path.dirname(abs_path)
 
-    user_name = "SAEMC"
     access_token = os.environ["myGithubAccessToken"]
+    user_name = "SAEMC"
+    art_name = "art.json"
 
     github_data = getGithubData(user_name, access_token)
-    art_data = getArtData(os.path.join(abs_dir, "art.json"))
+    art_data = getArtData(os.path.join(abs_dir, art_name))
 
     today = datetime.today().strftime("%Y-%m-%d")
     start_date = art_data["start_date"]
