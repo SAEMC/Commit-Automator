@@ -13,7 +13,7 @@ from datetime import datetime
 import httpx
 
 
-def getGithubData(user_name: str, access_token: str) -> dict:
+def getGithubData(*, user_name: str, access_token: str) -> dict:
     with httpx.Client() as client:
         url = "https://api.github.com/graphql"
         headers = {
@@ -58,34 +58,34 @@ def getGithubData(user_name: str, access_token: str) -> dict:
         raise ValueError(f"'status_code' is {response.status_code}!")
 
 
-def getArtData(art_path: str) -> dict:
+def getArtData(*, art_path: str) -> dict:
     with open(art_path) as f:
-        data = json.load(f)
+        art_data = json.load(f)
 
-    start_day = datetime.strptime(data["start_date"], "%Y-%m-%d").strftime("%a")
+    start_day = datetime.strptime(art_data["start_date"], "%Y-%m-%d").strftime("%a")
     if start_day != "Sun":
         raise ValueError("'start_date' must start from Sunday!")
 
-    if data["duration"] != len(data["pixels_level"]):
+    if art_data["duration"] != len(art_data["pixels_level"]):
         raise ValueError("'duration' must be same with 'pixels_level'!")
 
-    return data
+    return art_data
 
 
-def getDateDelta(art_path: str, today: str, start_date: str) -> int:
+def getDateDelta(*, art_file: str, today: str, start_date: str) -> int:
     today = datetime.strptime(today, "%Y-%m-%d")
     start_date = datetime.strptime(start_date, "%Y-%m-%d")
     date_delta = (today - start_date).days
 
     if date_delta < 0:
         raise ValueError(
-            f"'start_date' of '{art_path}' must be earlier than or equal to today!"
+            f"'start_date' of '{art_file}' must be earlier than or equal to today!"
         )
 
     return date_delta
 
 
-def getPixelLevel(date_delta: int, pixels_level: list) -> int:
+def getPixelLevel(*, date_delta: int, pixels_level: list) -> int:
     flatten_pixels_level = list(itertools.chain(*pixels_level))
     total_pixels = len(flatten_pixels_level)
     pixel_idx = date_delta % total_pixels
@@ -94,7 +94,7 @@ def getPixelLevel(date_delta: int, pixels_level: list) -> int:
     return pixel_level
 
 
-def getCommitCount(pixel_level: int, date_count: Union[int, None]) -> int:
+def getCommitCount(*, pixel_level: int, date_count: Union[int, None]) -> int:
     if date_count is not None:
         if date_count < 1:
             date_level = 0
@@ -126,7 +126,7 @@ def getCommitCount(pixel_level: int, date_count: Union[int, None]) -> int:
     return commit_count
 
 
-def commitAndPush(art_name: str, commit_count: int) -> None:
+def commitAndPush(*, art_name: str, commit_count: int) -> None:
     for count in range(commit_count):
         print(f"Auto Commit: {count + 1}")
         subprocess.call("echo commit-automator >>commit-automator.txt", shell=True)
@@ -141,30 +141,33 @@ def commitAndPush(art_name: str, commit_count: int) -> None:
 
 
 def main() -> None:
-    ACCESS_TOKEN: Final = os.environ["myGithubAccessToken"]
-    ABS_PATH: Final = os.path.abspath(__file__)
-    ABS_DIR: Final = os.path.dirname(ABS_PATH)
+    USER_NAME: Final = "SAEMC"
+    ART_FILE: Final = "art.json"
 
-    user_name: str = "SAEMC"
-    art_path: str = "art.json"
+    abs_path: str = os.path.abspath(__file__)
+    abs_dir: str = os.path.dirname(abs_path)
+    access_token: str = os.environ["myGithubAccessToken"]
+    art_path: str = os.path.join(abs_dir, ART_FILE)
 
-    github_data: dict = getGithubData(user_name, ACCESS_TOKEN)
-    art_data: dict = getArtData(os.path.join(ABS_DIR, art_path))
+    github_data: dict = getGithubData(user_name=USER_NAME, access_token=access_token)
+    art_data: dict = getArtData(art_path=art_path)
 
     today: str = datetime.today().strftime("%Y-%m-%d")
     start_date: str = art_data["start_date"]
-    date_delta: int = getDateDelta(art_path, today, start_date)
+    date_delta: int = getDateDelta(
+        art_file=ART_FILE, today=today, start_date=start_date
+    )
 
     pixels_level: list = art_data["pixels_level"]
-    pixel_level: int = getPixelLevel(date_delta, pixels_level)
+    pixel_level: int = getPixelLevel(date_delta=date_delta, pixels_level=pixels_level)
 
     date_count: Union[int, None] = github_data.get(today, None)
     print(f"Github commits today: {date_count}")
-    commit_count: int = getCommitCount(pixel_level, date_count)
+    commit_count: int = getCommitCount(pixel_level=pixel_level, date_count=date_count)
     print(f"Need to commit more: {commit_count}")
 
     art_name: str = art_data["name"]
-    commitAndPush(art_name, commit_count)
+    commitAndPush(art_name=art_name, commit_count=commit_count)
 
 
 if __name__ == "__main__":
