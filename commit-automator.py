@@ -7,7 +7,7 @@ import os
 import json
 import itertools
 import subprocess
-from typing import Union
+from typing import Union, Final
 from datetime import datetime
 
 import httpx
@@ -47,11 +47,13 @@ def getGithubData(user_name: str, access_token: str) -> dict:
         ]
         contribution_days = list(itertools.chain(*contribution_days))
 
-        return {
+        github_data = {
             element.get("date"): int(element.get("contributionCount"))
             for element in contribution_days
             if element.get("date")
         }
+
+        return github_data
     else:
         raise ValueError(f"'status_code' is {response.status_code}!")
 
@@ -70,13 +72,15 @@ def getArtData(art_path: str) -> dict:
     return data
 
 
-def getDateDelta(today: str, start_date: str) -> int:
+def getDateDelta(art_path: str, today: str, start_date: str) -> int:
     today = datetime.strptime(today, "%Y-%m-%d")
     start_date = datetime.strptime(start_date, "%Y-%m-%d")
     date_delta = (today - start_date).days
 
     if date_delta < 0:
-        raise ValueError("'start_date' of 'art.json' must be earlier than today !")
+        raise ValueError(
+            f"'start_date' of '{art_path}' must be earlier than or equal to today!"
+        )
 
     return date_delta
 
@@ -136,30 +140,30 @@ def commitAndPush(art_name: str, commit_count: int) -> None:
     print(f"Nice.. done.")
 
 
-def main():
-    abs_path = os.path.abspath(__file__)
-    abs_dir = os.path.dirname(abs_path)
+def main() -> None:
+    ACCESS_TOKEN: Final = os.environ["myGithubAccessToken"]
+    ABS_PATH: Final = os.path.abspath(__file__)
+    ABS_DIR: Final = os.path.dirname(ABS_PATH)
 
-    access_token = os.environ["myGithubAccessToken"]
-    user_name = "SAEMC"
-    art_path = "art.json"
+    user_name: str = "SAEMC"
+    art_path: str = "art.json"
 
-    github_data = getGithubData(user_name, access_token)
-    art_data = getArtData(os.path.join(abs_dir, art_path))
+    github_data: dict = getGithubData(user_name, ACCESS_TOKEN)
+    art_data: dict = getArtData(os.path.join(ABS_DIR, art_path))
 
-    today = datetime.today().strftime("%Y-%m-%d")
-    start_date = art_data["start_date"]
-    date_delta = getDateDelta(today, start_date)
+    today: str = datetime.today().strftime("%Y-%m-%d")
+    start_date: str = art_data["start_date"]
+    date_delta: int = getDateDelta(art_path, today, start_date)
 
-    pixels_level = art_data["pixels_level"]
-    pixel_level = getPixelLevel(date_delta, pixels_level)
+    pixels_level: list = art_data["pixels_level"]
+    pixel_level: int = getPixelLevel(date_delta, pixels_level)
 
-    date_count = github_data.get(today, None)
+    date_count: Union[int, None] = github_data.get(today, None)
     print(f"Github commits today: {date_count}")
-    commit_count = getCommitCount(pixel_level, date_count)
+    commit_count: int = getCommitCount(pixel_level, date_count)
     print(f"Need to commit more: {commit_count}")
 
-    art_name = art_data["name"]
+    art_name: str = art_data["name"]
     commitAndPush(art_name, commit_count)
 
 
