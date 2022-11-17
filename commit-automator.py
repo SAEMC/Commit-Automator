@@ -161,6 +161,7 @@ def main() -> None:
     pixels_level: list = art_data["pixels_level"]
     pixel_level: int = getPixelLevel(date_delta=date_delta, pixels_level=pixels_level)
 
+    print(f"Current date: {datetime.now()}")
     date_count: Union[int, None] = github_data.get(today, None)
     print(f"Github commits today: {date_count}")
     commit_count: int = getCommitCount(pixel_level=pixel_level, date_count=date_count)
