@@ -4,23 +4,23 @@
 
 
 import os
-import json
 import itertools
+import json
 import subprocess
-from typing import Union, Final
 from datetime import datetime
+from typing import Union, Final
 
 import httpx
 
 
 def getGithubData(*, user_name: str, access_token: str) -> dict:
-    with httpx.Client() as client:
-        url = "https://api.github.com/graphql"
-        headers = {
+    with httpx.Client() as _client:
+        _url = "https://api.github.com/graphql"
+        _headers = {
             "Content-Type": "application/graphql",
             "Authorization": "Bearer " + access_token,
         }
-        body = f"""
+        _body = f"""
         query {{
             user(login: "{user_name}") {{
                 contributionsCollection {{
@@ -36,106 +36,110 @@ def getGithubData(*, user_name: str, access_token: str) -> dict:
         }}
         """
 
-        response = client.post(url=url, headers=headers, json={"query": body})
+        _response = _client.post(url=_url, headers=_headers, json={"query": _body})
 
-    if response.status_code == 200:
-        result = response.json()["data"]["user"]["contributionsCollection"][
+    if _response.status_code == 200:
+        _result = _response.json()["data"]["user"]["contributionsCollection"][
             "contributionCalendar"
         ]["weeks"]
-        contribution_days = [
-            values for element in result for values in element.values()
+        _contribution_days = [
+            _values for _element in _result for _values in _element.values()
         ]
-        contribution_days = list(itertools.chain(*contribution_days))
+        _contribution_days = list(itertools.chain(*_contribution_days))
 
-        github_data = {
-            element.get("date"): int(element.get("contributionCount"))
-            for element in contribution_days
-            if element.get("date")
+        _github_data = {
+            _element.get("date"): int(_element.get("contributionCount"))
+            for _element in _contribution_days
+            if _element.get("date")
         }
 
-        return github_data
+        return _github_data
     else:
-        raise ValueError(f"'status_code' is {response.status_code}!")
+        raise ValueError(f"'status_code' is {_response.status_code}!")
 
 
 def getArtData(*, art_path: str) -> dict:
     with open(art_path) as f:
-        art_data = json.load(f)
+        _art_data = json.load(f)
 
-    start_day = datetime.strptime(art_data["start_date"], "%Y-%m-%d").strftime("%a")
-    if start_day != "Sun":
+    _start_date = datetime.strptime(_art_data["start_date"], "%Y-%m-%d").strftime("%a")
+    if _start_date != "Sun":
         raise ValueError("'start_date' must start from Sunday!")
 
-    if art_data["duration"] != len(art_data["pixels_level"]):
+    if _art_data["duration"] != len(_art_data["pixels_level"]):
         raise ValueError("'duration' must be same with 'pixels_level'!")
 
-    return art_data
+    return _art_data
 
 
 def getDateDelta(*, art_file: str, today: str, start_date: str) -> int:
-    today = datetime.strptime(today, "%Y-%m-%d")
-    start_date = datetime.strptime(start_date, "%Y-%m-%d")
-    date_delta = (today - start_date).days
+    _today = datetime.strptime(today, "%Y-%m-%d")
+    _start_date = datetime.strptime(start_date, "%Y-%m-%d")
+    _date_delta = (_today - _start_date).days
 
-    if date_delta < 0:
+    if _date_delta < 0:
         raise ValueError(
             f"'start_date' of '{art_file}' must be earlier than or equal to today!"
         )
 
-    return date_delta
+    return _date_delta
 
 
 def getPixelLevel(*, date_delta: int, pixels_level: list) -> int:
-    flatten_pixels_level = list(itertools.chain(*pixels_level))
-    total_pixels = len(flatten_pixels_level)
-    pixel_idx = date_delta % total_pixels
-    pixel_level = flatten_pixels_level[pixel_idx]
+    _flatten_pixels_level = list(itertools.chain(*pixels_level))
+    _total_pixels = len(_flatten_pixels_level)
+    _pixel_idx = date_delta % _total_pixels
+    _pixel_level = _flatten_pixels_level[_pixel_idx]
 
-    return pixel_level
+    return _pixel_level
 
 
 def getCommitCount(*, pixel_level: int, date_count: Union[int, None]) -> int:
     if date_count is not None:
         if date_count < 1:
-            date_level = 0
+            _date_level = 0
         elif date_count < 15:
-            date_level = 1
+            _date_level = 1
         elif date_count < 30:
-            date_level = 2
+            _date_level = 2
         elif date_count < 45:
-            date_level = 3
+            _date_level = 3
         else:
-            date_level = 4
+            _date_level = 4
     else:
         raise ValueError("Cannot find commit count in Github now.. try later.")
 
-    if pixel_level > date_level:
+    if pixel_level > _date_level:
         if pixel_level == 1:
-            min_commit = 1
+            _min_commit = 1
         elif pixel_level == 2:
-            min_commit = 15
+            _min_commit = 15
         elif pixel_level == 3:
-            min_commit = 30
+            _min_commit = 30
         else:
-            min_commit = 45
+            _min_commit = 45
 
-        commit_count = min_commit - date_count
+        _commit_count = _min_commit - date_count
     else:
         raise ValueError("Enough today.. nothing to commit.")
 
-    return commit_count
+    return _commit_count
 
 
 def commitAndPush(*, art_name: str, commit_count: int) -> None:
-    for count in range(commit_count):
-        print(f"Auto Commit: {count + 1}")
+    for _count in range(commit_count):
+        print(f"Auto Commit: {_count + 1}")
         subprocess.call("echo commit-automator >>commit-automator.txt", shell=True)
         subprocess.call("git add commit-automator.txt", shell=True)
-        subprocess.call(f"git commit -m 'auto: Run commit-automator for {art_name}'", shell=True)
+        subprocess.call(
+            f"git commit -m 'auto: Run commit-automator for {art_name}'", shell=True
+        )
 
     subprocess.call("rm commit-automator.txt", shell=True)
     subprocess.call("git add commit-automator.txt", shell=True)
-    subprocess.call(f"git commit -m 'auto: Run commit-automator for {art_name}'", shell=True)
+    subprocess.call(
+        f"git commit -m 'auto: Run commit-automator for {art_name}'", shell=True
+    )
     subprocess.call("git push", shell=True)
     print(f"Nice.. done.")
 
