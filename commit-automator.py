@@ -59,8 +59,8 @@ def getGithubData(*, user_name: str, access_token: str) -> dict:
 
 
 def getArtData(*, art_path: str) -> dict:
-    with open(art_path) as f:
-        _art_data = json.load(f)
+    with open(art_path) as _file:
+        _art_data = json.load(_file)
 
     _start_date = datetime.strptime(_art_data["start_date"], "%Y-%m-%d").strftime("%a")
     if _start_date != "Sun":
