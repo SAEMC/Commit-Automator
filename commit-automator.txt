@@ -26,3 +26,4 @@ commit-automator
 commit-automator
 commit-automator
 commit-automator
+commit-automator
