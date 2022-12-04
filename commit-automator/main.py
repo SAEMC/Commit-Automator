@@ -53,14 +53,16 @@ def main() -> None:
 
     if args.execute == "commit":
         env_name: str = "githubAccessToken"
+        access_token: Union[str, None] = None
 
         try:
-            access_token: Union[str, None] = os.environ[env_name]
+            access_token = os.environ[env_name]
 
             if access_token == "" or access_token is None:
                 raise KeyError
         except KeyError:
             log.error(
+                f"Invalid value of '{env_name}': {access_token}\n"
                 f"'{env_name}' must be already set in environment variables!\n\n\n"
                 "[ Manually ] Run the folowwing example command:\n\n"
                 f'  export {env_name}="YourGithubAccessToken"\n\n'

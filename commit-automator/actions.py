@@ -86,7 +86,7 @@ class FileAction(argparse.Action):
                 "'duration' must be same with length of 'pixels_level'!"
             )
 
-        ### Check 'pixels_level' in art file is valid
+        ### Check 'pixels_level' is valid
         _pixels_level: list = _art_dict["pixels_level"]
         _flatten_pixels_level: list = list(itertools.chain(*_pixels_level))
 
@@ -99,6 +99,21 @@ class FileAction(argparse.Action):
                 message=f"Invalid value of 'pixels_level': {_invalid_pixels_level}\n"
                 "The value of 'pixels_level' must be '0' ~ '4'!"
             )
+
+        ### Check 'start_date' is valid
+        _today: str = datetime.today().strftime("%Y-%m-%d")
+        _today_for_cal: datetime = datetime.strptime(_today, "%Y-%m-%d")
+        _start_date_for_cal: datetime = datetime.strptime(_start_date, "%Y-%m-%d")
+        _date_delta: int = (_today_for_cal - _start_date_for_cal).days
+
+        if _date_delta < 0:
+            parser.error(
+                message=f"Invalid value of 'start_date': {_start_date_for_cal:%Y-%m-%d}\n"
+                f"'start_date' must be earlier than or equal to today: {_today_for_cal:%Y-%m-%d}!"
+            )
+
+        _art_dict["today"] = _today
+        _art_dict["date_delta"] = _date_delta
 
         setattr(namespace, self.dest, values)
         FileAction.art_data = _art_dict

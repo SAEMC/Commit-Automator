@@ -2,27 +2,11 @@
 # Author: SAEMC
 # Date: 2022-12-07
 
-from datetime import datetime
 from typing import Union
 import itertools
 import sys
 
 from logger import log
-
-
-def _calDateDelta(*, today: str, start_date: str) -> int:
-    _today: datetime = datetime.strptime(today, "%Y-%m-%d")
-    _start_date: datetime = datetime.strptime(start_date, "%Y-%m-%d")
-    _date_delta: int = (_today - _start_date).days
-
-    try:
-        if _date_delta < 0:
-            raise ValueError("'start_date' must be earlier than or equal to today!")
-    except ValueError as e:
-        log.error(msg=e)
-        sys.exit(1)
-
-    return _date_delta
 
 
 def _calPixelLevel(*, date_delta: int, pixels_level: list) -> int:
@@ -78,9 +62,8 @@ def _calCommitCount(*, pixel_level: int, date_count: Union[int, None]) -> int:
 
 
 def getCommitCount(*, art_data: dict, github_data: dict) -> int:
-    _today: str = datetime.today().strftime("%Y-%m-%d")
-    _start_date: str = art_data["start_date"]
-    _date_delta: int = _calDateDelta(today=_today, start_date=_start_date)
+    _today: str = art_data["today"]
+    _date_delta: int = art_data["date_delta"]
 
     _pixels_level: list = art_data["pixels_level"]
     _pixel_level: int = _calPixelLevel(
