@@ -7,11 +7,15 @@ import numpy as np
 
 def displayArt(*, art_data: dict) -> None:
     _colors: list = [
+        # The way how to set colors:
+        # \033[38;2;<r>;<g>;<b>;m] - foreground color
+        # \033[48;2;<r>;<g>;<b>;m] - background color
+        # \033[38;2;<r>;<g>;<b>;48;2;<r>;<g>;<b>m] - fore/background color
         "\033[38;2;234;237;240m",
-        "\033[38;2;154;233;168m",
-        "\033[38;2;65;195;99m",
-        "\033[38;2;49;161;78m",
-        "\033[38;2;32;109;56m",
+        "\033[38;2;198;224;180m",
+        "\033[38;2;168;207;142m",
+        "\033[38;2;55;86;35m",
+        "\033[38;2;64;64;64m",
         "\033[0m",
     ]
     _art_name: str = art_data["art_name"]
