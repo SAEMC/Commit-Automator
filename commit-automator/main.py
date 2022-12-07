@@ -71,7 +71,7 @@ def main() -> None:
         commit_count: int = getCommitCount(art_data=art_data, github_data=github_data)
         art_name: str = art_data["name"]
 
-        # commitAndPush(art_name=art_name, commit_count=commit_count)
+        commitAndPush(art_name=art_name, commit_count=commit_count)
     elif args.execute == "display":
         displayArt(art_data=art_data)
     else:
