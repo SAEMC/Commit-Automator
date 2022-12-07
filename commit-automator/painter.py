@@ -16,14 +16,14 @@ _colors = [
 
 
 def displayArt(*, art_data: dict) -> None:
-    _name = art_data["name"]
+    _art_name = art_data["art_name"]
     _start_date = art_data["start_date"]
     _duration = art_data["duration"]
     _pixels_level = art_data["pixels_level"]
     _pixels_level_t = np.array(_pixels_level).T
 
     print(
-        f"Name of art: {_name}\n"
+        f"Name of art: {_art_name}\n"
         f"Start date: {_start_date}\n"
         f"Duration: {_duration}\n"
     )

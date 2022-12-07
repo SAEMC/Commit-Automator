@@ -21,13 +21,6 @@ def main() -> None:
         description="Check number of commits needed, and then commit & push it automatically.",
     )
     parser.add_argument(
-        "-u",
-        "--user",
-        type=str,
-        required=True,
-        help="Username of Github.",
-    )
-    parser.add_argument(
         "-f",
         "--file",
         default="art.json",
@@ -64,8 +57,9 @@ def main() -> None:
             )
             sys.exit(1)
 
+        user_name: str = art_data["user_name"]
         github_data: dict = getGithubData(
-            user_name=args.user, access_token=access_token
+            user_name=user_name, access_token=access_token
         )
         commit_count: int = getCommitCount(art_data=art_data, github_data=github_data)
 

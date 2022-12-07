@@ -1,5 +1,6 @@
 {
-  "name": "snoopy",
+  "user_name": "Username",
+  "art_name": "snoopy",
   "start_date": "2022-12-11",
   "duration": 12,
   "pixels_level": [
