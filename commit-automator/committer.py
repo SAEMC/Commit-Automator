@@ -11,13 +11,13 @@ def commitAndPush(*, art_name: str, commit_count: int) -> None:
         subprocess.call("echo commit-automator >>commit-automator.txt", shell=True)
         subprocess.call("git add commit-automator.txt", shell=True)
         subprocess.call(
-            f"git commit -m 'auto: Run commit-automator for {art_name}'", shell=True
+            f"git commit -m 'auto: run commit-automator for {art_name}'", shell=True
         )
 
     subprocess.call("rm commit-automator.txt", shell=True)
     subprocess.call("git add commit-automator.txt", shell=True)
     subprocess.call(
-        f"git commit -m 'auto: Run commit-automator for {art_name}'", shell=True
+        f"git commit -m 'auto: run commit-automator for {art_name}'", shell=True
     )
     subprocess.call("git push", shell=True)
     print(f"Nice.. done.")
