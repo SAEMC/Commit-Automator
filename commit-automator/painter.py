@@ -21,8 +21,6 @@ def displayArt(*, art_data: dict) -> None:
     _pixels_level: list = art_data["pixels_level"]
     _pixels_level_t: np.ndarray = np.array(_pixels_level).T
 
-    print(_duration)
-
     print(
         f"Name of art: {_art_name}\n"
         f"Start date: {_start_date}\n"
