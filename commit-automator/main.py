@@ -5,8 +5,9 @@
 import argparse
 import os
 import sys
-from pathlib import Path
+from typing import Union
 
+from actions import FileAction
 from calculator import getCommitCount
 from committer import commitAndPush
 from dataloader import getArtData, getGithubData
@@ -16,16 +17,17 @@ from __version__ import __version__
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(
+    parser: argparse.ArgumentParser = argparse.ArgumentParser(
         prog="commit-automator",
         description="Check number of commits needed, and then commit & push it automatically.",
     )
     parser.add_argument(
         "-f",
         "--file",
-        default="art.json",
         type=str,
-        help="Filename of art. Default is 'art.json'.",
+        action=FileAction,
+        required=True,
+        help="Filename of art.",
     )
     parser.add_argument(
         "-x",
@@ -34,17 +36,19 @@ def main() -> None:
         default="commit",
         help="Execute Commit or Display. Default is 'commit'.",
     )
-    args = parser.parse_args()
+    args: argparse.Namespace = parser.parse_args()
 
-    parent_dir: Path = Path(__file__).parents[1].absolute()
-    art_path: Path = parent_dir / args.file
-    art_data: dict = getArtData(art_path=art_path)
+    art_dict: dict = FileAction.art_dict
+    art_data: dict = getArtData(art_dict=art_dict)
 
     if args.execute == "commit":
-        key_name = "githubAccessToken"
+        key_name: str = "githubAccessToken"
 
         try:
-            access_token: str = os.environ[key_name]
+            access_token: Union[str, None] = os.environ[key_name]
+
+            if access_token == "" or access_token is None:
+                raise KeyError
         except KeyError:
             print(
                 f"'{key_name}' must be already set in environment variables!\n"

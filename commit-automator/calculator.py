@@ -9,9 +9,9 @@ from typing import Union
 
 
 def _calDateDelta(*, today: str, start_date: str) -> int:
-    _today = datetime.strptime(today, "%Y-%m-%d")
-    _start_date = datetime.strptime(start_date, "%Y-%m-%d")
-    _date_delta = (_today - _start_date).days
+    _today: datetime = datetime.strptime(today, "%Y-%m-%d")
+    _start_date: datetime = datetime.strptime(start_date, "%Y-%m-%d")
+    _date_delta: int = (_today - _start_date).days
 
     try:
         if _date_delta < 0:
@@ -24,15 +24,18 @@ def _calDateDelta(*, today: str, start_date: str) -> int:
 
 
 def _calPixelLevel(*, date_delta: int, pixels_level: list) -> int:
-    _flatten_pixels_level = list(itertools.chain(*pixels_level))
-    _total_pixels = len(_flatten_pixels_level)
-    _pixel_idx = date_delta % _total_pixels
-    _pixel_level = _flatten_pixels_level[_pixel_idx]
+    _flatten_pixels_level: list = list(itertools.chain(*pixels_level))
+    _total_pixels: int = len(_flatten_pixels_level)
+    _pixel_idx: int = date_delta % _total_pixels
+    _pixel_level: int = _flatten_pixels_level[_pixel_idx]
 
     return _pixel_level
 
 
 def _calCommitCount(*, pixel_level: int, date_count: Union[int, None]) -> int:
+    _date_level: int
+    _min_commit: int
+
     try:
         if date_count is not None:
             if date_count < 1:
@@ -62,7 +65,7 @@ def _calCommitCount(*, pixel_level: int, date_count: Union[int, None]) -> int:
             else:
                 _min_commit = 45
 
-            _commit_count = _min_commit - date_count
+            _commit_count: int = _min_commit - date_count
         else:
             raise ValueError("Enough today.. nothing to commit.")
     except ValueError as e:
