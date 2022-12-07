@@ -4,6 +4,7 @@
 
 import itertools
 import json
+import sys
 from datetime import datetime
 from pathlib import Path
 
@@ -35,24 +36,28 @@ def getGithubData(*, user_name: str, access_token: str) -> dict:
 
         _response = _client.post(url=_url, headers=_headers, json={"query": _body})
 
-    if _response.status_code == 200:
-        _result = _response.json()["data"]["user"]["contributionsCollection"][
-            "contributionCalendar"
-        ]["weeks"]
-        _contribution_days = [
-            _values for _element in _result for _values in _element.values()
-        ]
-        _contribution_days = list(itertools.chain(*_contribution_days))
+    try:
+        if _response.status_code == 200:
+            _result = _response.json()["data"]["user"]["contributionsCollection"][
+                "contributionCalendar"
+            ]["weeks"]
+            _contribution_days = [
+                _values for _element in _result for _values in _element.values()
+            ]
+            _contribution_days = list(itertools.chain(*_contribution_days))
 
-        _github_data = {
-            _element.get("date"): int(_element.get("contributionCount"))
-            for _element in _contribution_days
-            if _element.get("date")
-        }
+            _github_data = {
+                _element.get("date"): int(_element.get("contributionCount"))
+                for _element in _contribution_days
+                if _element.get("date")
+            }
 
-        return _github_data
-    else:
-        raise ValueError(f"'status_code' is {_response.status_code}!")
+            return _github_data
+        else:
+            raise ValueError(f"'response' is {_response.text}!")
+    except ValueError as e:
+        print(e)
+        sys.exit(1)
 
 
 def getArtData(*, art_path: Path) -> dict:
@@ -60,10 +65,19 @@ def getArtData(*, art_path: Path) -> dict:
         _art_data = json.load(_file)
 
     _start_date = datetime.strptime(_art_data["start_date"], "%Y-%m-%d").strftime("%a")
-    if _start_date != "Sun":
-        raise ValueError("'start_date' must start from Sunday!")
 
-    if _art_data["duration"] != len(_art_data["pixels_level"]):
-        raise ValueError("'duration' must be same with 'pixels_level'!")
+    try:
+        if _start_date != "Sun":
+            raise ValueError("'start_date' must start from Sunday!")
+    except ValueError as e:
+        print(e)
+        sys.exit(1)
+
+    try:
+        if _art_data["duration"] != len(_art_data["pixels_level"]):
+            raise ValueError("'duration' must be same with 'pixels_level'!")
+    except ValueError as e:
+        print(e)
+        sys.exit(1)
 
     return _art_data

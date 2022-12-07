@@ -3,6 +3,7 @@
 # Date: 2022-12-07
 
 import itertools
+import sys
 from datetime import datetime
 from typing import Union
 
@@ -12,8 +13,12 @@ def _calDateDelta(*, today: str, start_date: str) -> int:
     _start_date = datetime.strptime(start_date, "%Y-%m-%d")
     _date_delta = (_today - _start_date).days
 
-    if _date_delta < 0:
-        raise ValueError(f"'start_date' must be earlier than or equal to today!")
+    try:
+        if _date_delta < 0:
+            raise ValueError(f"'start_date' must be earlier than or equal to today!")
+    except ValueError as e:
+        print(e)
+        sys.exit(1)
 
     return _date_delta
 
@@ -28,33 +33,41 @@ def _calPixelLevel(*, date_delta: int, pixels_level: list) -> int:
 
 
 def _calCommitCount(*, pixel_level: int, date_count: Union[int, None]) -> int:
-    if date_count is not None:
-        if date_count < 1:
-            _date_level = 0
-        elif date_count < 15:
-            _date_level = 1
-        elif date_count < 30:
-            _date_level = 2
-        elif date_count < 45:
-            _date_level = 3
+    try:
+        if date_count is not None:
+            if date_count < 1:
+                _date_level = 0
+            elif date_count < 15:
+                _date_level = 1
+            elif date_count < 30:
+                _date_level = 2
+            elif date_count < 45:
+                _date_level = 3
+            else:
+                _date_level = 4
         else:
-            _date_level = 4
-    else:
-        raise ValueError("Cannot find commit count in Github now.. try later.")
+            raise ValueError("Cannot find commit count in Github now.. try later.")
+    except ValueError as e:
+        print(e)
+        sys.exit(1)
 
-    if pixel_level > _date_level:
-        if pixel_level == 1:
-            _min_commit = 1
-        elif pixel_level == 2:
-            _min_commit = 15
-        elif pixel_level == 3:
-            _min_commit = 30
+    try:
+        if pixel_level > _date_level:
+            if pixel_level == 1:
+                _min_commit = 1
+            elif pixel_level == 2:
+                _min_commit = 15
+            elif pixel_level == 3:
+                _min_commit = 30
+            else:
+                _min_commit = 45
+
+            _commit_count = _min_commit - date_count
         else:
-            _min_commit = 45
-
-        _commit_count = _min_commit - date_count
-    else:
-        raise ValueError("Enough today.. nothing to commit.")
+            raise ValueError("Enough today.. nothing to commit.")
+    except ValueError as e:
+        print(e)
+        sys.exit(1)
 
     return _commit_count
 
