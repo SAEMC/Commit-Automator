@@ -30,47 +30,46 @@ def main() -> None:
     parser.add_argument(
         "-f",
         "--file",
+        default="art.json",
         type=str,
-        required=True,
-        help="Filename of art.",
+        help="Filename of art. Default is 'art.json'.",
     )
     parser.add_argument(
         "-x",
         "--execute",
         choices=["commit", "display"],
-        required=True,
-        help="Execute Commit or Display.",
+        default="commit",
+        help="Execute Commit or Display. Default is 'commit'.",
     )
-
     args = parser.parse_args()
-
-    key_name = "myGithubAccessToken"
-    try:
-        access_token: str = os.environ[key_name]
-    except KeyError:
-        print(
-            f"'{key_name}' must be already set in environment variables!\n"
-            f"Run folowwing example command first if you execute manually:\n\n"
-            f' export {key_name}="TheValueOfGithubAccessToken"\n\n'
-            f"Write fowllowing example line first into Crontab if you execute automatically:\n\n"
-            f' {key_name}="TheValueOfGithubAccessToken"\n\n'
-            f"If you have no Github access token, see here:\n"
-            f"https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token"
-        )
-        sys.exit(1)
 
     parent_dir: Path = Path(__file__).parents[1].absolute()
     art_path: Path = parent_dir / args.file
     art_data: dict = getArtData(art_path=art_path)
 
     if args.execute == "commit":
+        key_name = "githubAccessToken"
+
+        try:
+            access_token: str = os.environ[key_name]
+        except KeyError:
+            print(
+                f"'{key_name}' must be already set in environment variables!\n"
+                f"Run folowwing example command first if you execute manually:\n\n"
+                f' export {key_name}="TheValueOfGithubAccessToken"\n\n'
+                f"Write fowllowing example line first into Crontab if you execute automatically:\n\n"
+                f' {key_name}="TheValueOfGithubAccessToken"\n\n'
+                f"If you have no Github access token, see here:\n"
+                f"https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token"
+            )
+            sys.exit(1)
+
         github_data: dict = getGithubData(
             user_name=args.user, access_token=access_token
         )
         commit_count: int = getCommitCount(art_data=art_data, github_data=github_data)
-        art_name: str = art_data["name"]
 
-        commitAndPush(art_name=art_name, commit_count=commit_count)
+        commitAndPush(commit_count=commit_count)
 
     if args.execute == "display":
         displayArt(art_data=art_data)
