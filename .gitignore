@@ -1,2 +1,7 @@
+# Directories
+__pycache__/
+
+# Files
 .DS_Store
+art.json
 automator.log
