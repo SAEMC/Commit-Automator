@@ -21,18 +21,26 @@ def displayArt(*, art_data: dict) -> None:
     _pixels_level: list = art_data["pixels_level"]
     _pixels_level_t: np.ndarray = np.array(_pixels_level).T
 
+    print(_duration)
+
     print(
         f"Name of art: {_art_name}\n"
         f"Start date: {_start_date}\n"
         f"Duration: {_duration}\n"
     )
 
+    print(f"{'-' * (_duration * 2 + 3)}")
+
     for _pixels_level in _pixels_level_t:
-        line: str = f""
+        line: str = f"|"
 
         for _pixel_level in _pixels_level:
             line += f" {_colors[_pixel_level]}■{_colors[-1]}"
 
+        line += f" |"
+
         print(line)
+
+    print(f"{'-' * (_duration * 2 + 3)}")
 
     print("")
