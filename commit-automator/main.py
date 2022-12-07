@@ -5,14 +5,13 @@
 import argparse
 import os
 import sys
-from datetime import datetime
 from pathlib import Path
-from typing import Union
 
 from calculator import getCommitCount
 from committer import commitAndPush
 from dataloader import getArtData, getGithubData
 from painter import displayArt
+
 from __version__ import __version__
 
 
@@ -72,10 +71,9 @@ def main() -> None:
         art_name: str = art_data["name"]
 
         commitAndPush(art_name=art_name, commit_count=commit_count)
-    elif args.execute == "display":
+
+    if args.execute == "display":
         displayArt(art_data=art_data)
-    else:
-        sys.exit(1)
 
 
 if __name__ == "__main__":
