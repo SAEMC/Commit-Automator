@@ -7,6 +7,7 @@ import numpy as np
 
 def displayArt(*, art_data: dict) -> None:
     _colors: list = [
+        # 4-bit Colors
         "\033[97m",  # Bright White
         "\033[93m",  # Bright Yellow
         "\033[92m",  # Bright Green
