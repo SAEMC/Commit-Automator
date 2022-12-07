@@ -9,7 +9,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Union
 
-from calculator import getCommitCount, getDateDelta, getPixelLevel
+from calculator import getCommitCount
 from committer import commitAndPush
 from dataloader import getArtData, getGithubData
 from painter import displayArt
@@ -68,28 +68,10 @@ def main() -> None:
         github_data: dict = getGithubData(
             user_name=args.user, access_token=access_token
         )
-
-        today: str = datetime.today().strftime("%Y-%m-%d")
-        start_date: str = art_data["start_date"]
-        date_delta: int = getDateDelta(
-            art_file=args.file, today=today, start_date=start_date
-        )
-
-        pixels_level: list = art_data["pixels_level"]
-        pixel_level: int = getPixelLevel(
-            date_delta=date_delta, pixels_level=pixels_level
-        )
-
-        print(f"Today: {datetime.now()}")
-        date_count: Union[int, None] = github_data.get(today, None)
-        print(f"Github commits today: {date_count}")
-        commit_count: int = getCommitCount(
-            pixel_level=pixel_level, date_count=date_count
-        )
-        print(f"Need to commit more: {commit_count}")
-
+        commit_count: int = getCommitCount(art_data=art_data, github_data=github_data)
         art_name: str = art_data["name"]
-        commitAndPush(art_name=art_name, commit_count=commit_count)
+
+        # commitAndPush(art_name=art_name, commit_count=commit_count)
     elif args.execute == "display":
         displayArt(art_data=art_data)
     else:

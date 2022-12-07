@@ -7,20 +7,18 @@ from datetime import datetime
 from typing import Union
 
 
-def getDateDelta(*, art_file: str, today: str, start_date: str) -> int:
+def _calDateDelta(*, today: str, start_date: str) -> int:
     _today = datetime.strptime(today, "%Y-%m-%d")
     _start_date = datetime.strptime(start_date, "%Y-%m-%d")
     _date_delta = (_today - _start_date).days
 
     if _date_delta < 0:
-        raise ValueError(
-            f"'start_date' of '{art_file}' must be earlier than or equal to today!"
-        )
+        raise ValueError(f"'start_date' must be earlier than or equal to today!")
 
     return _date_delta
 
 
-def getPixelLevel(*, date_delta: int, pixels_level: list) -> int:
+def _calPixelLevel(*, date_delta: int, pixels_level: list) -> int:
     _flatten_pixels_level = list(itertools.chain(*pixels_level))
     _total_pixels = len(_flatten_pixels_level)
     _pixel_idx = date_delta % _total_pixels
@@ -29,7 +27,7 @@ def getPixelLevel(*, date_delta: int, pixels_level: list) -> int:
     return _pixel_level
 
 
-def getCommitCount(*, pixel_level: int, date_count: Union[int, None]) -> int:
+def _calCommitCount(*, pixel_level: int, date_count: Union[int, None]) -> int:
     if date_count is not None:
         if date_count < 1:
             _date_level = 0
@@ -57,5 +55,26 @@ def getCommitCount(*, pixel_level: int, date_count: Union[int, None]) -> int:
         _commit_count = _min_commit - date_count
     else:
         raise ValueError("Enough today.. nothing to commit.")
+
+    return _commit_count
+
+
+def getCommitCount(*, art_data: dict, github_data: dict) -> int:
+    _today: str = datetime.today().strftime("%Y-%m-%d")
+    _start_date: str = art_data["start_date"]
+    _date_delta: int = _calDateDelta(today=_today, start_date=_start_date)
+
+    _pixels_level: list = art_data["pixels_level"]
+    _pixel_level: int = _calPixelLevel(
+        date_delta=_date_delta, pixels_level=_pixels_level
+    )
+
+    print(f"Today: {datetime.now()}")
+    _date_count: Union[int, None] = github_data.get(_today, None)
+    print(f"Github commits today: {_date_count}")
+    _commit_count: int = _calCommitCount(
+        pixel_level=_pixel_level, date_count=_date_count
+    )
+    print(f"Need to commit more: {_commit_count}")
 
     return _commit_count
