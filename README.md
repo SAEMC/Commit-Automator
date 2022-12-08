@@ -25,7 +25,7 @@ git clone https://github.com/SAEMC/Commit-Automator.git
 
 
 # Create a directory for new repository
-# Also have to create new remote repository in Github (Enter your Github username below)
+# Notice that you had to create new remote repository in Github first (Enter your Github username below)
 mkdir Auto-Commit && cd Auto-Commit/ && \
 echo "# Auto-Commit" >> README.md
 git init
