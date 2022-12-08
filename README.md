@@ -15,7 +15,7 @@ This is a Commit Automator checks number of commits needed, and then commits & p
 ### Set directories
 
 ```shell
-# Assuming be in $HOME like '/home/you/'
+# Assume that you are in $HOME like '/home/you/'
 # So you run these commands, then you will be in '/home/you/Automator/'
 mkdir Automator && cd Automator/
 
@@ -155,7 +155,7 @@ python Commit-Automator/commit-automator -h
 (automator) cd Auto-Commit/
 
 
-# Filename of art is 'art.json' now, but you can change it
+# Filename of art is 'art.json' here, but you can change it
 (automator) python ../Commit-Automator/commit-automator -f art.json
 ```
 
@@ -177,7 +177,7 @@ githubAccessToken="YourGithubAccessToken"
 # 2. Directory of new repository
 # 3. Path of Python runtime
 # 4. Path of commit-automator package
-# 5. Filename of art is 'art.json' now, but you can change it
+# 5. Filename of art is 'art.json' here, but you can change it
 * * * * * cd /home/you/Automator/Auto-Commit/ ; /the/path/shown/after/run/which/python /home/you/Automator/Commit-Automator/commit-automator -f art.json -l
 ```
 
@@ -195,8 +195,8 @@ service cron status
 ```shell
 # The feature displaying art cannot save in the log file, this just shows in the shell
 
-# Assuming be in '/home/you/Automator/'
-# Filename of art is 'art.json' now, but you can change it
+# Assume that you are in '/home/you/Automator/'
+# Filename of art is 'art.json' here, but you can change it
 python Commit-Automator/commit-automator -f art.json -x display
 
 
