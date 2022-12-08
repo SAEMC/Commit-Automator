@@ -59,19 +59,21 @@ def getGithubData(*, user_name: str, access_token: str) -> dict:
 
 
 def getArtData(*, art_dict: dict) -> dict:
-    _start_date: str = datetime.strptime(art_dict["start_date"], "%Y-%m-%d").strftime(
-        "%a"
-    )
+    _start_date: str = art_dict["start_date"]
+    _start_day: str = datetime.strptime(_start_date, "%Y-%m-%d").strftime("%a")
 
     try:
-        if _start_date != "Sun":
+        if _start_day != "Sun":
             raise ValueError("'start_date' must start from Sunday!")
     except ValueError as e:
         print(e)
         sys.exit(1)
 
+    _duration: int = art_dict["duration"]
+    _pixels_level: list = art_dict["pixels_level"]
+
     try:
-        if art_dict["duration"] != len(art_dict["pixels_level"]):
+        if _duration != len(_pixels_level):
             raise ValueError("'duration' must be same with 'pixels_level'!")
     except ValueError as e:
         print(e)

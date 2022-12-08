@@ -42,22 +42,22 @@ def main() -> None:
     art_data: dict = getArtData(art_dict=art_dict)
 
     if args.execute == "commit":
-        key_name: str = "githubAccessToken"
+        env_name: str = "githubAccessToken"
 
         try:
-            access_token: Union[str, None] = os.environ[key_name]
+            access_token: Union[str, None] = os.environ[env_name]
 
             if access_token == "" or access_token is None:
                 raise KeyError
         except KeyError:
             print(
-                f"'{key_name}' must be already set in environment variables!\n"
-                f"Run folowwing example command first if you execute manually:\n\n"
-                f' export {key_name}="TheValueOfGithubAccessToken"\n\n'
-                f"Write fowllowing example line first into Crontab if you execute automatically:\n\n"
-                f' {key_name}="TheValueOfGithubAccessToken"\n\n'
-                f"If you have no Github access token, see here:\n"
-                f"https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token"
+                f"'{env_name}' must be already set in environment variables!\n\n\n"
+                f"[ Manually ] Run the folowwing example command:\n\n"
+                f'  export {env_name}="YourGithubAccessToken"\n\n'
+                f"[ Automatically ] Write the fowllowing example line into Crontab:\n\n"
+                f'  {env_name}="YourGithubAccessToken"\n\n\n'
+                f"If you have no Github access token, see here:\n\n"
+                f"  https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token"
             )
             sys.exit(1)
 
