@@ -133,6 +133,7 @@ cp Commit-Automator/art.json.exmaple Commit-Automator/art.json
 # This is default command
 python Commit-Automator/commit-automator -f FilenameOfArt [-x {commit,display}] [-l]
 
+
 # This is same
 python Commit-Automator/commit-automator --file=FilenameOfArt [--execute={commit,display}] [--save-log]
 
@@ -192,7 +193,7 @@ service cron status
 #### display
 
 ```shell
-# The feature displaying art cannot save the log file, this just shows in the shell
+# The feature displaying art cannot save in the log file, this just shows in the shell
 
 # Assuming be in '/home/you/Automator/'
 # Filename of art is 'art.json' now, but you can change it
