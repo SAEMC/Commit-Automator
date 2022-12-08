@@ -11,6 +11,7 @@ from actions import FileAction
 from calculator import getCommitCount
 from committer import commitAndPush
 from dataloader import getArtData, getGithubData
+from logger import log, saveLog
 from painter import displayArt
 
 from __version__ import __version__
@@ -24,8 +25,8 @@ def main() -> None:
     parser.add_argument(
         "-f",
         "--file",
-        type=str,
         action=FileAction,
+        type=str,
         required=True,
         help="Filename of art.",
     )
@@ -36,7 +37,18 @@ def main() -> None:
         default="commit",
         help="Execute Commit or Display. Default is 'commit'.",
     )
+    parser.add_argument(
+        "-l",
+        "--save-log",
+        action="store_true",
+        default=False,
+        dest="is_save",
+        help="Save log file 'automator.log'. Default is 'False'.",
+    )
     args: argparse.Namespace = parser.parse_args()
+
+    if args.is_save:
+        saveLog()
 
     art_dict: dict = FileAction.art_dict
     art_data: dict = getArtData(art_dict=art_dict)
@@ -50,7 +62,7 @@ def main() -> None:
             if access_token == "" or access_token is None:
                 raise KeyError
         except KeyError:
-            print(
+            log.error(
                 f"'{env_name}' must be already set in environment variables!\n\n\n"
                 f"[ Manually ] Run the folowwing example command:\n\n"
                 f'  export {env_name}="YourGithubAccessToken"\n\n'

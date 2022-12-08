@@ -4,10 +4,12 @@
 
 import subprocess
 
+from logger import log
+
 
 def commitAndPush(*, commit_count: int) -> None:
     for _count in range(commit_count):
-        print(f"Auto Commit: {_count + 1}")
+        log.info(msg=f"Auto Commit: {_count + 1}")
         subprocess.call("echo commit-automator >>commit-automator.txt", shell=True)
         subprocess.call("git add commit-automator.txt", shell=True)
         subprocess.call(f"git commit -m 'auto: run commit-automator'", shell=True)
@@ -16,4 +18,4 @@ def commitAndPush(*, commit_count: int) -> None:
     subprocess.call("git add commit-automator.txt", shell=True)
     subprocess.call(f"git commit -m 'auto: run commit-automator'", shell=True)
     subprocess.call("git push", shell=True)
-    print(f"Nice.. done.")
+    log.info(msg=f"Nice.. done.")

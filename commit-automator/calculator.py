@@ -7,6 +7,8 @@ import sys
 from datetime import datetime
 from typing import Union
 
+from logger import log
+
 
 def _calDateDelta(*, today: str, start_date: str) -> int:
     _today: datetime = datetime.strptime(today, "%Y-%m-%d")
@@ -17,7 +19,7 @@ def _calDateDelta(*, today: str, start_date: str) -> int:
         if _date_delta < 0:
             raise ValueError(f"'start_date' must be earlier than or equal to today!")
     except ValueError as e:
-        print(e)
+        log.error(msg=e)
         sys.exit(1)
 
     return _date_delta
@@ -34,7 +36,7 @@ def _calPixelLevel(*, date_delta: int, pixels_level: list) -> int:
         if _wrong_pixels_level:
             raise ValueError(f"The value of 'pixels_level' must be '0' ~ '4'!")
     except ValueError as e:
-        print(e)
+        log.error(msg=e)
         sys.exit(1)
 
     _total_pixels: int = len(_flatten_pixels_level)
@@ -52,7 +54,7 @@ def _calCommitCount(*, pixel_level: int, date_count: Union[int, None]) -> int:
         if date_count is None:
             raise ValueError("Cannot find commit count in Github now.. try later.")
     except ValueError as e:
-        print(e)
+        log.info(msg=e)
         sys.exit(1)
 
     if date_count < 1:
@@ -70,7 +72,7 @@ def _calCommitCount(*, pixel_level: int, date_count: Union[int, None]) -> int:
         if pixel_level <= _date_level:
             raise ValueError("Enough today.. nothing to commit.")
     except ValueError as e:
-        print(e)
+        log.info(msg=e)
         sys.exit(1)
 
     if pixel_level == 1:
@@ -97,12 +99,11 @@ def getCommitCount(*, art_data: dict, github_data: dict) -> int:
         date_delta=_date_delta, pixels_level=_pixels_level
     )
 
-    print(f"\n{'Today:':<20} {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     _date_count: Union[int, None] = github_data.get(_today, None)
-    print(f"{'Commits in Github:':<20} {_date_count}\n")
+    log.info(msg=f"{'Commits in Github:':<20} {_date_count}\n")
     _commit_count: int = _calCommitCount(
         pixel_level=_pixel_level, date_count=_date_count
     )
-    print(f"{'Need to commit more:':<20} {_commit_count}\n")
+    log.info(msg=f"{'Need to commit more:':<20} {_commit_count}\n")
 
     return _commit_count
