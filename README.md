@@ -67,18 +67,19 @@ Automator <- You are here
 
 ```shell
 # Create and activate a Conda env
-conda create -n automator python=3.9 -y
+conda create -n automator python=3.9 -y && \
 conda activate automator
 
 
 # You can check the path of Python runtime
-# The path shown after run this command is important when use Cron
+# The path shown after run this command is important when you use Cron
 (automator) which python
 ```
 
 ### Install Python dependencies
 
 ```shell
+# Install Python dependencies which will be saved in the Conda env
 (automator) pip install -r Commit-Automator/requirements.txt
 ```
 
