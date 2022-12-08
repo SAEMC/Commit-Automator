@@ -157,7 +157,7 @@ python Commit-Automator/commit-automator -h
 
 
 # Filename of art is 'art.json' here, but you can change it
-(automator) python ../Commit-Automator/commit-automator -f art.json
+(automator) python ../Commit-Automator/commit-automator -f art.json -l
 ```
 
 ##### 2. Automatically
