@@ -92,7 +92,7 @@ conda activate automator
 cp Commit-Automator/art.json.exmaple Commit-Automator/art.json
 ```
 
-```json
+```
 # Now you can change the values:
 # 1. 'user_name' must be your Github username
 # 2. 'art_name' is name of art
