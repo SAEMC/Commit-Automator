@@ -26,7 +26,7 @@ def _calDateDelta(*, today: str, start_date: str) -> int:
 def _calPixelLevel(*, date_delta: int, pixels_level: list) -> int:
     _flatten_pixels_level: list = list(itertools.chain(*pixels_level))
 
-    _wrong_pixels_level = [
+    _wrong_pixels_level: list = [
         _level for _level in _flatten_pixels_level if _level < 0 or _level > 4
     ]
 
