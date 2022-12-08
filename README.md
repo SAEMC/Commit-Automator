@@ -57,6 +57,7 @@ Automator <- You are here
     │   ├── calculator.py
     │   ├── committer.py
     │   ├── dataloader.py
+    │   ├── logger.py
     │   ├── main.py
     │   └── painter.py
     └── requirements.txt
@@ -130,9 +131,10 @@ cp Commit-Automator/art.json.exmaple Commit-Automator/art.json
 
 ```shell
 # This is default command
-python Commit-Automator/commit-automator --file=FilenameOfArt [--execute={commit,display}]
+python Commit-Automator/commit-automator -f FilenameOfArt [-x {commit,display}] [-l]
+
 # This is same
-python Commit-Automator/commit-automator -f FilenameOfArt [-x {commit,display}]
+python Commit-Automator/commit-automator --file=FilenameOfArt [--execute={commit,display}] [--save-log]
 
 
 # You'd better check helps
@@ -153,7 +155,7 @@ python Commit-Automator/commit-automator -h
 
 
 # Filename of art is 'art.json' now, but you can change it
-(automator) python ../Commit-Automator/commit-automator --file=art.json
+(automator) python ../Commit-Automator/commit-automator -f art.json
 ```
 
 ##### 2. Automatically
@@ -169,33 +171,34 @@ python Commit-Automator/commit-automator -h
 githubAccessToken="YourGithubAccessToken"
 
 
-# You have to change following line
-# 1. Time
+# You have to change these in the following line:
+# 1. Schedule
 # 2. Directory of new repository
 # 3. Path of Python runtime
 # 4. Path of commit-automator package
 # 5. Filename of art is 'art.json' now, but you can change it
-# 6. Path of log file
-* * * * * cd /home/you/Automator/Auto-Commit/ ; /the/path/shown/after/run/which/python /home/you/Automator/Commit-Automator/commit-automator --file=art.json >> /home/you/Automator/Commit-Automator/automator.log 2>&1
-
-
-# If you don't need log file:
-* * * * * cd /home/you/Automator/Auto-Commit/ ; /the/path/shown/after/run/which/python /home/you/Automator/Commit-Automator/commit-automator --file=art.json
+* * * * * cd /home/you/Automator/Auto-Commit/ ; /the/path/shown/after/run/which/python /home/you/Automator/Commit-Automator/commit-automator -f art.json -l
 ```
 
 ```shell
 # And then run this command
 service cron restart
+
+
+# Additionally, you can check the status of Cron
+service cron status
 ```
 
 #### display
 
 ```shell
+# The feature displaying art cannot save the log file, this just shows in the shell
+
 # Assuming be in '/home/you/Automator/'
 # Filename of art is 'art.json' now, but you can change it
-python Commit-Automator/commit-automator --file=art.json --execute=display
+python Commit-Automator/commit-automator -f art.json -x display
 
 
 # Also you can do like this:
-python Commit-Automator/commit-automator -f art.json -x display
+python Commit-Automator/commit-automator --file=art.json --execute=display
 ```
