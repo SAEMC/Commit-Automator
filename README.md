@@ -157,6 +157,7 @@ python Commit-Automator/commit-automator -h
 
 
 # Filename of art is 'art.json' here, but you can change it
+# Saving log file is 'True' here, but you can change it
 (automator) python ../Commit-Automator/commit-automator -f art.json -l
 ```
 
@@ -174,11 +175,12 @@ githubAccessToken="YourGithubAccessToken"
 
 
 # You have to change these in the following line:
-# 1. Schedule
-# 2. Directory of new repository
-# 3. Path of Python runtime
-# 4. Path of commit-automator package
-# 5. Filename of art is 'art.json' here, but you can change it
+# 1. Schedule ('* * * * *')
+# 2. Directory of new repository ('/home/you/Automator/Auto-Commit/')
+# 3. Path of Python runtime ('/the/path/shown/after/run/which/python')
+# 4. Path of commit-automator package ('/home/you/Automator/Commit-Automator/commit-automator')
+# 5. Filename of art is 'art.json' here, but you can change it ('-f art.json')
+# 6. Saving log file is 'True' here, but you can change it ('-l')
 * * * * * cd /home/you/Automator/Auto-Commit/ ; /the/path/shown/after/run/which/python /home/you/Automator/Commit-Automator/commit-automator -f art.json -l
 ```
 
