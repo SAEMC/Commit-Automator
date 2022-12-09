@@ -134,7 +134,12 @@ cp Commit-Automator/examples/art.json.exmaple Commit-Automator/art.json
   ]
 }
 
-# This 'art.json' shows Snoopy like below,
+# '0' is Bright White
+# '1' is Bright Yellow
+# '2' is Bright Green
+# '3' is Bright Blue
+# '4' is Bright Magenta
+# So this 'art.json' shows Snoopy like below,
 # and in my case, it shows Whale:
 ```
 
