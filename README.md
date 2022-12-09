@@ -41,7 +41,7 @@ cd ..
 ```
 
 ```
-# Now structure is like:
+# Now structure looks like:
 Automator <- You are here
 ├── Auto-Commit
 │   └── README.md
@@ -126,7 +126,11 @@ cp Commit-Automator/art.json.exmaple Commit-Automator/art.json
     [1, 1, 1, 3, 3, 3, 1]
   ]
 }
+
+# This 'pixels_level' looks like below:
 ```
+
+![Displaying_Snoopy](./Displaying_Snoopy.png?raw=true)
 
 ### Use Commit-Automator
 
