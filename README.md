@@ -202,8 +202,6 @@ service cron status
 #### display
 
 ```shell
-# The feature displaying art cannot save in the log file, this just shows in the shell
-
 # Assume that you are in '/home/you/Automator/'
 # Filename of art is 'art.json' here, but you can change it
 python Commit-Automator/commit-automator -f art.json -x display

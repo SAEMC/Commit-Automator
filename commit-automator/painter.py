@@ -4,6 +4,8 @@
 
 import numpy as np
 
+from logger import log
+
 
 def displayArt(*, art_data: dict) -> None:
     _colors: list = [
@@ -21,7 +23,8 @@ def displayArt(*, art_data: dict) -> None:
     _pixels_level: list = art_data["pixels_level"]
     _pixels_level_t: np.ndarray = np.array(_pixels_level).T
 
-    print(f"\n *{'-' * (_duration * 2 + 1)}*")
+    _lines: str = f""
+    _lines += f" *{'-' * (_duration * 2 + 1)}*\n"
 
     for _pixels_level in _pixels_level_t:
         _line: str = f" |"
@@ -29,7 +32,9 @@ def displayArt(*, art_data: dict) -> None:
         for _pixel_level in _pixels_level:
             _line += f" {_colors[_pixel_level]}■{_colors[-1]}"
 
-        _line += f" |"
-        print(_line)
+        _line += f" |\n"
+        _lines += _line
 
-    print(f" *{'-' * (_duration * 2 + 1)}* {_art_name} by {_user_name}\n")
+    _lines += f" *{'-' * (_duration * 2 + 1)}* {_art_name} by {_user_name}"
+
+    log.info(msg=_lines)
