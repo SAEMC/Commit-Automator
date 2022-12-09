@@ -130,7 +130,9 @@ cp Commit-Automator/art.json.exmaple Commit-Automator/art.json
 # This 'pixels_level' looks like below:
 ```
 
-![Displaying_Snoopy](./Displaying_Snoopy.png?raw=true)
+<p align="center">
+  <img src="./Displaying_Snoopy.png" alt="Displaying_Snoopy">
+</p>
 
 ### Use Commit-Automator
 
