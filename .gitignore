@@ -3,5 +3,6 @@ __pycache__/
 
 # Files
 .DS_Store
-art.json
-automator.log
+*.json
+*.sh
+*.log
