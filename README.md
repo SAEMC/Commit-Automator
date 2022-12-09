@@ -48,7 +48,6 @@ Automator <- You are here
 └── Commit-Automator
     ├── LICENSE.txt
     ├── README.md
-    ├── art.json.example
     ├── assets
     │   ├── Snoopy.png
     │   └── Whale.png
@@ -63,7 +62,9 @@ Automator <- You are here
     │   ├── logger.py
     │   ├── main.py
     │   └── painter.py
-    ├── cron4commit.sh.example
+    ├── examples
+    │   ├── art.json.example
+    │   └── cron4commit.sh.example
     └── requirements.txt
 ```
 
