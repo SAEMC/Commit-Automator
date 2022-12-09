@@ -10,7 +10,7 @@ from typing import Union
 from actions import FileAction
 from calculator import getCommitCount
 from committer import commitAndPush
-from dataloader import getArtData, getGithubData
+from dataloader import getGithubData
 from logger import log, saveLog
 from painter import displayArt
 
@@ -50,8 +50,7 @@ def main() -> None:
     if args.is_save:
         saveLog()
 
-    art_dict: dict = FileAction.art_dict
-    art_data: dict = getArtData(art_dict=art_dict)
+    art_data: dict = FileAction.art_data
 
     if args.execute == "commit":
         env_name: str = "githubAccessToken"

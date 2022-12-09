@@ -4,7 +4,6 @@
 
 import itertools
 import sys
-from datetime import datetime
 
 import httpx
 
@@ -58,28 +57,3 @@ def getGithubData(*, user_name: str, access_token: str) -> dict:
     except ValueError as e:
         log.error(msg=e)
         sys.exit(1)
-
-
-def getArtData(*, art_dict: dict) -> dict:
-    _start_date: str = art_dict["start_date"]
-    _start_day: str = datetime.strptime(_start_date, "%Y-%m-%d").strftime("%a")
-    _duration: int = art_dict["duration"]
-    _pixels_level: list = art_dict["pixels_level"]
-
-    try:
-        if _start_day != "Sun":
-            raise ValueError("'start_date' must start from Sunday!")
-    except ValueError as e:
-        log.error(msg=e)
-        sys.exit(1)
-
-    try:
-        if _duration != len(_pixels_level):
-            raise ValueError("'duration' must be same with 'pixels_level'!")
-    except ValueError as e:
-        log.error(msg=e)
-        sys.exit(1)
-
-    _art_data: dict = art_dict
-
-    return _art_data

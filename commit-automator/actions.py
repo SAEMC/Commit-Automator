@@ -6,12 +6,13 @@ import argparse
 import itertools
 import json
 import os
+from datetime import datetime
 from pathlib import Path
 from typing import Any, Sequence, Union
 
 
 class FileAction(argparse.Action):
-    art_dict: dict
+    art_data: dict
 
     def __call__(
         self,
@@ -72,5 +73,19 @@ class FileAction(argparse.Action):
         if _wrong_pixels_level:
             parser.error("The value of 'pixels_level' must be '0' ~ '4'!")
 
+        ### Check 'start_date' is valid
+        _start_date: str = _art_dict["start_date"]
+        _start_day: str = datetime.strptime(_start_date, "%Y-%m-%d").strftime("%a")
+
+        if _start_day != "Sun":
+            parser.error("'start_date' must start from Sunday!")
+
+        ### Check 'duration' and 'pixels_level' are valid
+        _duration: int = _art_dict["duration"]
+        _pixels_level: list = _art_dict["pixels_level"]
+
+        if _duration != len(_pixels_level):
+            parser.error("'duration' must be same with 'pixels_level'!")
+
         setattr(namespace, self.dest, values)
-        FileAction.art_dict = _art_dict
+        FileAction.art_data = _art_dict
