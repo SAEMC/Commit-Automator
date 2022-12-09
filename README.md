@@ -94,8 +94,8 @@ conda activate automator
 ### Handle `art.json`
 
 ```shell
-# Copy or move 'Commit-Automator/art.json.example' to 'Commit-Automator/art.json'
-cp Commit-Automator/art.json.exmaple Commit-Automator/art.json
+# Copy or move 'Commit-Automator/examples/art.json.example' to 'Commit-Automator/art.json'
+cp Commit-Automator/examples/art.json.exmaple Commit-Automator/art.json
 ```
 
 ```
@@ -178,8 +178,8 @@ python Commit-Automator/commit-automator -h
 #### 2. Automatically
 
 ```shell
-# Copy or move 'Commit-Automator/cron4commit.sh.example' to 'Commit-Automator/cron4commit.sh'
-cp Commit-Automator/cron4commit.sh.exmaple Commit-Automator/cron4commit.sh
+# Copy or move 'Commit-Automator/examples/cron4commit.sh.example' to 'Commit-Automator/cron4commit.sh'
+cp Commit-Automator/examples/cron4commit.sh.exmaple Commit-Automator/cron4commit.sh
 ```
 
 ```shell
