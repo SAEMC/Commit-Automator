@@ -24,7 +24,7 @@ class FileAction(argparse.Action):
         _ext: str = os.path.splitext(p=values)[-1]
 
         if _ext != ".json":
-            parser.error(f"Extension of the art file must be '.json'!")
+            parser.error("Extension of the art file must be '.json'!")
 
         ### Check file exists
         _parent_dir: Path = Path(__file__).parents[1].absolute()
@@ -47,7 +47,7 @@ class FileAction(argparse.Action):
 
         _wrong_keys: str = f""
         _wrong_count: int = 0
-        _verb: str = f"is"
+        _verb: str = "is"
 
         for _key in list(_art_dict.keys()):
             if _key not in _right_keys:
@@ -55,7 +55,7 @@ class FileAction(argparse.Action):
                 _wrong_count += 1
 
         if _wrong_count > 1:
-            _verb = f"are"
+            _verb = "are"
 
         if _wrong_keys:
             _wrong_keys = _wrong_keys[:-2]
@@ -70,7 +70,7 @@ class FileAction(argparse.Action):
         ]
 
         if _wrong_pixels_level:
-            parser.error(f"The value of 'pixels_level' must be '0' ~ '4'!")
+            parser.error("The value of 'pixels_level' must be '0' ~ '4'!")
 
         setattr(namespace, self.dest, values)
         FileAction.art_dict = _art_dict

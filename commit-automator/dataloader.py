@@ -68,14 +68,14 @@ def getArtData(*, art_dict: dict) -> dict:
 
     try:
         if _start_day != "Sun":
-            raise ValueError(f"'start_date' must start from Sunday!")
+            raise ValueError("'start_date' must start from Sunday!")
     except ValueError as e:
         log.error(msg=e)
         sys.exit(1)
 
     try:
         if _duration != len(_pixels_level):
-            raise ValueError(f"'duration' must be same with 'pixels_level'!")
+            raise ValueError("'duration' must be same with 'pixels_level'!")
     except ValueError as e:
         log.error(msg=e)
         sys.exit(1)

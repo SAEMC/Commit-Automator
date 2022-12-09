@@ -64,12 +64,12 @@ def main() -> None:
         except KeyError:
             log.error(
                 f"'{env_name}' must be already set in environment variables!\n\n\n"
-                f"[ Manually ] Run the folowwing example command:\n\n"
+                "[ Manually ] Run the folowwing example command:\n\n"
                 f'  export {env_name}="YourGithubAccessToken"\n\n'
-                f"[ Automatically ] Write the fowllowing example line into Crontab:\n\n"
+                "[ Automatically ] Write the fowllowing example line into Crontab:\n\n"
                 f'  {env_name}="YourGithubAccessToken"\n\n\n'
-                f"If you have no Github access token, see here:\n\n"
-                f"  https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token"
+                "If you have no Github access token, see here:\n\n"
+                "  https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token"
             )
             sys.exit(1)
 

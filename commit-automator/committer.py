@@ -24,9 +24,9 @@ def commitAndPush(*, commit_count: int) -> None:
         subprocess.call("git commit -m 'auto: run commit-automator'", shell=True)
         subprocess.call("git push", shell=True)
 
-        _lines += f"Nice.. done."
+        _lines += "Nice.. done."
 
         log.info(msg=_lines)
     except:
-        log.error(msg=f"Cannot commit and push.. Something's wrong!")
+        log.error(msg="Cannot commit and push.. Something's wrong!")
         sys.exit(1)

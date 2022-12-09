@@ -17,7 +17,7 @@ def _calDateDelta(*, today: str, start_date: str) -> int:
 
     try:
         if _date_delta < 0:
-            raise ValueError(f"'start_date' must be earlier than or equal to today!")
+            raise ValueError("'start_date' must be earlier than or equal to today!")
     except ValueError as e:
         log.error(msg=e)
         sys.exit(1)
@@ -40,7 +40,7 @@ def _calCommitCount(*, pixel_level: int, date_count: Union[int, None]) -> int:
 
     try:
         if date_count is None:
-            raise ValueError(f"Cannot find commit count in Github now.. try later.")
+            raise ValueError("Cannot find commit count in Github now.. try later.")
     except ValueError as e:
         log.info(msg=e)
         sys.exit(1)
@@ -58,7 +58,7 @@ def _calCommitCount(*, pixel_level: int, date_count: Union[int, None]) -> int:
 
     try:
         if pixel_level <= _date_level:
-            raise ValueError(f"Enough today.. nothing to commit.")
+            raise ValueError("Enough today.. nothing to commit.")
     except ValueError as e:
         log.info(msg=e)
         sys.exit(1)

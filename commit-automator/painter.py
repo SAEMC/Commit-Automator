@@ -32,7 +32,7 @@ def displayArt(*, art_data: dict) -> None:
         for _pixel_level in _pixels_level:
             _line += f" {_colors[_pixel_level]}■{_colors[-1]}"
 
-        _line += f" |\n"
+        _line += " |\n"
         _lines += _line
 
     _lines += f" *{'-' * (_duration * 2 + 1)}* {_art_name} by {_user_name}"
