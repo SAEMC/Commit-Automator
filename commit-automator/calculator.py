@@ -40,7 +40,7 @@ def _calCommitCount(*, pixel_level: int, date_count: Union[int, None]) -> int:
 
     try:
         if date_count is None:
-            raise ValueError("Cannot find commit count in Github now.. try later.")
+            raise ValueError(f"Cannot find commit count in Github now.. try later.")
     except ValueError as e:
         log.info(msg=e)
         sys.exit(1)
@@ -58,7 +58,7 @@ def _calCommitCount(*, pixel_level: int, date_count: Union[int, None]) -> int:
 
     try:
         if pixel_level <= _date_level:
-            raise ValueError("Enough today.. nothing to commit.")
+            raise ValueError(f"Enough today.. nothing to commit.")
     except ValueError as e:
         log.info(msg=e)
         sys.exit(1)

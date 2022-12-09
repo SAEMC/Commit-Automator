@@ -47,7 +47,7 @@ class FileAction(argparse.Action):
 
         _wrong_keys: str = f""
         _wrong_count: int = 0
-        _verb: str = "is"
+        _verb: str = f"is"
 
         for _key in list(_art_dict.keys()):
             if _key not in _right_keys:
@@ -55,7 +55,7 @@ class FileAction(argparse.Action):
                 _wrong_count += 1
 
         if _wrong_count > 1:
-            _verb = "are"
+            _verb = f"are"
 
         if _wrong_keys:
             _wrong_keys = _wrong_keys[:-2]
