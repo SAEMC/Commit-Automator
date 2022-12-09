@@ -210,8 +210,8 @@ cd /home/you/Automator/Auto-Commit/ && \                   # 1
 # In the Crontab editor (via '$ crontab -e')
 
 # When you get the schedule and path of 'cron4commit.sh' fixed once,
-# you might never worry about the paths of
-# the directory of new repository, Python runtime, etc.
+# you might never worry about the changes of
+# paths of the directory of new repository, Python runtime, etc.
 # So I love this way
 
 ...
