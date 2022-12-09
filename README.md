@@ -143,7 +143,7 @@ cp Commit-Automator/examples/art.json.exmaple Commit-Automator/art.json
   <img src="./assets/Whale.png" alt="Whale" width="400" height="180">
 </p>
 
-### Use Commit-Automator
+### How to use Commit-Automator
 
 ```shell
 # This is default command
