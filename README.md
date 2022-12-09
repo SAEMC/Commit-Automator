@@ -127,7 +127,7 @@ cp Commit-Automator/art.json.exmaple Commit-Automator/art.json
   ]
 }
 
-# This 'pixels_level' looks like below:
+# This 'art.json' is displayed like below:
 ```
 
 <p align="center">
