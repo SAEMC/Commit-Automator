@@ -111,7 +111,7 @@ cp Commit-Automator/examples/art.json.exmaple Commit-Automator/art.json
 #    'duration' and length of 'pixels_level' must be same
 # 5. 'pixels_level' is color depth from 0 to 4
 #    You can see contirbution count color in Github profile page
-#    I've set 'Snoppy' for example
+#    I've set 'Snoopy' for example
 
 {
   "user_name": "Username",
