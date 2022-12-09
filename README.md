@@ -49,6 +49,9 @@ Automator <- You are here
     ├── LICENSE.txt
     ├── README.md
     ├── art.json.example
+    ├── assets
+    │   ├── Snoopy.png
+    │   └── Whale.png
     ├── commit-automator
     │   ├── __init__.py
     │   ├── __main__.py
@@ -60,6 +63,7 @@ Automator <- You are here
     │   ├── logger.py
     │   ├── main.py
     │   └── painter.py
+    ├── cron4commit.sh.example
     └── requirements.txt
 ```
 
@@ -95,20 +99,22 @@ cp Commit-Automator/art.json.exmaple Commit-Automator/art.json
 ```
 
 ```
+# In 'art.json'
+
 # Now you can change the values:
 # 1. 'user_name' must be your Github username
 # 2. 'art_name' is name of art
-#    I've set 'snoopy' for example
+#    I've set 'Snoopy' for example
 # 3. 'start_date' must start from Sunday
 # 4. 'duration' is a cycle of painting your art
 #    'duration' and length of 'pixels_level' must be same
 # 5. 'pixels_level' is color depth from 0 to 4
 #    You can see contirbution count color in Github profile page
-#    I've set 'snoppy' for example
+#    I've set 'Snoppy' for example
 
 {
   "user_name": "Username",
-  "art_name": "snoopy",
+  "art_name": "Snoopy",
   "start_date": "2022-12-11",
   "duration": 12,
   "pixels_level": [
@@ -127,11 +133,13 @@ cp Commit-Automator/art.json.exmaple Commit-Automator/art.json
   ]
 }
 
-# This 'art.json' is displayed like below:
+# This 'art.json' shows Snoopy like below,
+# and in my case, it shows Whale:
 ```
 
 <p align="center">
-  <img src="./Displaying_Snoopy.png" alt="Displaying_Snoopy">
+  <img src="./assets/Snoopy.png" alt="Snoopy" width="400" height="180">
+  <img src="./assets/Whale.png" alt="Whale" width="400" height="180">
 </p>
 
 ### Use Commit-Automator
@@ -149,9 +157,9 @@ python Commit-Automator/commit-automator --file=FilenameOfArt [--execute={commit
 python Commit-Automator/commit-automator -h
 ```
 
-#### commit
+### Use Commit-Automator with `commit`
 
-##### 1. Manually
+#### 1. Manually
 
 ```shell
 # 'githubAccessToken' must be already set in environment variables
@@ -167,11 +175,43 @@ python Commit-Automator/commit-automator -h
 (automator) python ../Commit-Automator/commit-automator -f art.json -l
 ```
 
-##### 2. Automatically
+#### 2. Automatically
+
+```shell
+# Copy or move 'Commit-Automator/cron4commit.sh.example' to 'Commit-Automator/cron4commit.sh'
+cp Commit-Automator/cron4commit.sh.exmaple Commit-Automator/cron4commit.sh
+```
+
+```shell
+# In 'cron4commit.sh'
+
+# Whenever the paths are changed,
+# you just modify this script without running Cron restart command
+
+
+...
+
+
+# You have to change these in the following lines:
+# 1. Directory of new repository
+# 2. Path of Python runtime
+# 3. Path of commit-automator package
+# 4. Filename of art is 'art.json' here, but you can change it
+# 5. Saving log file is 'True' here, but you can change it
+
+cd /home/you/Automator/Auto-Commit/ && \                   # 1
+  /the/path/shown/after/run/which/python \                 # 2
+  /home/you/Automator/Commit-Automator/commit-automator \  # 3
+  -f art.json -l                                           # 4, 5
+```
 
 ```
 # In the Crontab editor (via '$ crontab -e')
 
+# When you get the schedule and path of 'cron4commit.sh' fixed once,
+# you might be never worry about the paths of
+# the directory of new repository, Python runtime, etc.
+# So I love this way
 
 ...
 
@@ -180,14 +220,10 @@ python Commit-Automator/commit-automator -h
 githubAccessToken="YourGithubAccessToken"
 
 
-# You have to change these in the following line:
-# 1. Schedule ('* * * * *')
-# 2. Directory of new repository ('/home/you/Automator/Auto-Commit/')
-# 3. Path of Python runtime ('/the/path/shown/after/run/which/python')
-# 4. Path of commit-automator package ('/home/you/Automator/Commit-Automator/commit-automator')
-# 5. Filename of art is 'art.json' here, but you can change it ('-f art.json')
-# 6. Saving log file is 'True' here, but you can change it ('-l')
-* * * * * cd /home/you/Automator/Auto-Commit/ ; /the/path/shown/after/run/which/python /home/you/Automator/Commit-Automator/commit-automator -f art.json -l
+# You have to change schedule
+# For example, '* * * * *' -> '45 23 * * *'
+# And have to change the path of 'cron4commit.sh'
+* * * * * /home/you/Automator/Commit-Automator/cron4commit.sh
 ```
 
 ```shell
@@ -199,7 +235,7 @@ service cron restart
 service cron status
 ```
 
-#### display
+### Use Commit-Automator with `display`
 
 ```shell
 # Assume that you are in '/home/you/Automator/'
