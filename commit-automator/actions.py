@@ -21,6 +21,9 @@ class FileAction(argparse.Action):
         values: Union[str, Sequence[Any], None],
         option_string: Union[str, None] = None,
     ) -> None:
+        _parent_dir: Path = Path(__file__).parents[1].absolute()
+        _art_path: Path = _parent_dir / values
+
         ### Check extension is '.json'
         _ext: str = os.path.splitext(p=values)[-1]
 
@@ -28,9 +31,6 @@ class FileAction(argparse.Action):
             parser.error("Extension of the art file must be '.json'!")
 
         ### Check file exists
-        _parent_dir: Path = Path(__file__).parents[1].absolute()
-        _art_path: Path = _parent_dir / values
-
         if not os.path.exists(path=_art_path):
             parser.error(f"No such file or directory: {_art_path}")
 
@@ -62,6 +62,20 @@ class FileAction(argparse.Action):
             _wrong_keys = _wrong_keys[:-2]
             parser.error(f"{_wrong_keys} {_verb} wrong in {values}!")
 
+        ### Check 'start_date' is Sunday
+        _start_date: str = _art_dict["start_date"]
+        _start_day: str = datetime.strptime(_start_date, "%Y-%m-%d").strftime("%a")
+
+        if _start_day != "Sun":
+            parser.error("'start_date' must start from Sunday!")
+
+        ### Check 'duration' and 'pixels_level' are same
+        _duration: int = _art_dict["duration"]
+        _pixels_level: list = _art_dict["pixels_level"]
+
+        if _duration != len(_pixels_level):
+            parser.error("'duration' must be same with 'pixels_level'!")
+
         ### Check level of pixels in art file are right
         _pixels_level: list = _art_dict["pixels_level"]
         _flatten_pixels_level: list = list(itertools.chain(*_pixels_level))
@@ -72,20 +86,6 @@ class FileAction(argparse.Action):
 
         if _wrong_pixels_level:
             parser.error("The value of 'pixels_level' must be '0' ~ '4'!")
-
-        ### Check 'start_date' is valid
-        _start_date: str = _art_dict["start_date"]
-        _start_day: str = datetime.strptime(_start_date, "%Y-%m-%d").strftime("%a")
-
-        if _start_day != "Sun":
-            parser.error("'start_date' must start from Sunday!")
-
-        ### Check 'duration' and 'pixels_level' are valid
-        _duration: int = _art_dict["duration"]
-        _pixels_level: list = _art_dict["pixels_level"]
-
-        if _duration != len(_pixels_level):
-            parser.error("'duration' must be same with 'pixels_level'!")
 
         setattr(namespace, self.dest, values)
         FileAction.art_data = _art_dict
