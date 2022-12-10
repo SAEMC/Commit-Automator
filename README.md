@@ -228,7 +228,7 @@ githubAccessToken="YourGithubAccessToken"
 
 
 # You have to change schedule
-# For example, '* * * * *' -> '45 23 * * *'
+# For example, '59 23 * * *' or '1 0 * * *'
 # And have to change the path of 'cron.sh'
 * * * * * /home/you/Automator/Commit-Automator/cron.sh
 ```
