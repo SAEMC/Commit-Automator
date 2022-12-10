@@ -2,13 +2,13 @@
 # Author: SAEMC
 # Date: 2022-12-08
 
+from datetime import datetime
+from pathlib import Path
+from typing import Any, Sequence, Union
 import argparse
 import itertools
 import json
 import os
-from datetime import datetime
-from pathlib import Path
-from typing import Any, Sequence, Union
 
 
 class FileAction(argparse.Action):

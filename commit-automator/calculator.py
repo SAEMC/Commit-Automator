@@ -2,10 +2,10 @@
 # Author: SAEMC
 # Date: 2022-12-07
 
-import itertools
-import sys
 from datetime import datetime
 from typing import Union
+import itertools
+import sys
 
 from logger import log
 

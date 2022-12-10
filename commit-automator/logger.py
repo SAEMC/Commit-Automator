@@ -2,8 +2,8 @@
 # Author: SAEMC
 # Date: 2022-12-09
 
-import logging
 from pathlib import Path
+import logging
 
 
 log: logging.Logger = logging.getLogger(name="automator")

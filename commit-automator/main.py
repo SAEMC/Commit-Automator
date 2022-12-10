@@ -2,19 +2,18 @@
 # Author: SAEMC
 # Date: 2022-12-07
 
+from typing import Union
 import argparse
 import os
 import sys
-from typing import Union
 
+from __version__ import __version__
 from actions import FileAction
 from calculator import getCommitCount
 from committer import commitAndPush
 from dataloader import getGithubData
 from logger import log, saveLog
 from painter import displayArt
-
-from __version__ import __version__
 
 
 def main() -> None:
