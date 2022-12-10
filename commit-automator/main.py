@@ -42,12 +42,12 @@ def main() -> None:
         "--save-log",
         action="store_true",
         default=False,
-        dest="is_save",
+        dest="is_save_log",
         help="Save log file 'automator.log'. Default is 'False'.",
     )
     args: argparse.Namespace = parser.parse_args()
 
-    if args.is_save:
+    if args.is_save_log:
         saveLog()
 
     art_data: dict = FileAction.art_data
