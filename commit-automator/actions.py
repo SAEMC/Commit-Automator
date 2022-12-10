@@ -48,19 +48,17 @@ class FileAction(argparse.Action):
 
         _wrong_keys: str = f""
         _wrong_count: int = 0
-        _verb: str = "is"
 
         for _key in list(_art_dict.keys()):
             if _key not in _right_keys:
                 _wrong_keys += f"'{_key}', "
                 _wrong_count += 1
 
-        if _wrong_count > 1:
-            _verb = "are"
-
         if _wrong_keys:
             _wrong_keys = _wrong_keys[:-2]
-            parser.error(f"{_wrong_keys} {_verb} wrong in {values}!")
+            parser.error(
+                f"{_wrong_keys} {'are' if _wrong_count > 1 else 'is'} wrong in {values}!"
+            )
 
         ### Check 'start_date' is Sunday
         _start_date: str = _art_dict["start_date"]
@@ -76,7 +74,7 @@ class FileAction(argparse.Action):
         if _duration != len(_pixels_level):
             parser.error("'duration' must be same with 'pixels_level'!")
 
-        ### Check level of pixels in art file are right
+        ### Check 'pixels_level' in art file is right
         _pixels_level: list = _art_dict["pixels_level"]
         _flatten_pixels_level: list = list(itertools.chain(*_pixels_level))
 
