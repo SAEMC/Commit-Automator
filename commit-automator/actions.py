@@ -34,8 +34,8 @@ class FileAction(argparse.Action):
         if not os.path.exists(path=_art_path):
             parser.error(f"No such file or directory: {_art_path}")
 
-        ### Check keys in art file are right
-        _right_keys: list = [
+        ### Check keys in art file are vaild
+        _vaild_keys: list = [
             "user_name",
             "art_name",
             "start_date",
@@ -46,18 +46,17 @@ class FileAction(argparse.Action):
         with open(file=_art_path) as _file:
             _art_dict: dict = json.load(fp=_file)
 
-        _wrong_keys: str = f""
-        _wrong_count: int = 0
+        _invalid_keys: str = f""
+        _invalid_count: int = 0
 
         for _key in list(_art_dict.keys()):
-            if _key not in _right_keys:
-                _wrong_keys += f"'{_key}', "
-                _wrong_count += 1
+            if _key not in _vaild_keys:
+                _invalid_keys += f"'{_key}', "
+                _invalid_count += 1
 
-        if _wrong_keys:
-            _wrong_keys = _wrong_keys[:-2]
+        if _invalid_keys:
             parser.error(
-                f"{_wrong_keys} {'are' if _wrong_count > 1 else 'is'} wrong in {values}!"
+                f"{_invalid_keys[:-2]} {'are' if _invalid_count > 1 else 'is'} wrong in {values}!"
             )
 
         ### Check 'start_date' is Sunday
@@ -74,15 +73,15 @@ class FileAction(argparse.Action):
         if _duration != len(_pixels_level):
             parser.error("'duration' must be same with 'pixels_level'!")
 
-        ### Check 'pixels_level' in art file is right
+        ### Check 'pixels_level' in art file is valid
         _pixels_level: list = _art_dict["pixels_level"]
         _flatten_pixels_level: list = list(itertools.chain(*_pixels_level))
 
-        _wrong_pixels_level: list = [
+        _invalid_pixels_level: list = [
             _level for _level in _flatten_pixels_level if _level < 0 or _level > 4
         ]
 
-        if _wrong_pixels_level:
+        if _invalid_pixels_level:
             parser.error("The value of 'pixels_level' must be '0' ~ '4'!")
 
         setattr(namespace, self.dest, values)
