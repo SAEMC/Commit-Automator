@@ -25,8 +25,11 @@ git clone https://github.com/SAEMC/Commit-Automator.git
 
 
 # Create a directory for new repository
-# Notice that you had to create new remote repository in Github first (Enter your Github username below)
-mkdir Auto-Commit && cd Auto-Commit/ && \
+mkdir Auto-Commit && cd Auto-Commit/
+
+
+# Notice that you had to create new remote repository in Github first
+# (Enter your Github username below)
 echo "# Auto-Commit" >> README.md
 git init
 git add README.md
@@ -77,7 +80,7 @@ conda activate automator
 
 
 # You can check the path of Python runtime
-# The path shown after run this command is important when you use Cron
+# The path shown after run this command is used when you set Cron
 (automator) which python
 ```
 
@@ -95,7 +98,8 @@ conda activate automator
 ### Handle `art.json`
 
 ```shell
-# Copy or move 'Commit-Automator/examples/art.json.example' to 'Commit-Automator/art.json'
+# Copy or move 'Commit-Automator/examples/art.json.example'
+# to 'Commit-Automator/art.json'
 cp Commit-Automator/examples/art.json.exmaple Commit-Automator/art.json
 ```
 
@@ -155,10 +159,6 @@ cp Commit-Automator/examples/art.json.exmaple Commit-Automator/art.json
 python Commit-Automator/commit-automator -f FilenameOfArt [-x {commit,display}] [-l]
 
 
-# This is same
-python Commit-Automator/commit-automator --file=FilenameOfArt [--execute={commit,display}] [--save-log]
-
-
 # You'd better check helps
 python Commit-Automator/commit-automator -h
 ```
@@ -184,7 +184,8 @@ python Commit-Automator/commit-automator -h
 #### 2. Automatically
 
 ```shell
-# Copy or move 'Commit-Automator/examples/cron4commit.sh.example' to 'Commit-Automator/cron4commit.sh'
+# Copy or move 'Commit-Automator/examples/cron4commit.sh.example'
+# to 'Commit-Automator/cron4commit.sh'
 cp Commit-Automator/examples/cron4commit.sh.exmaple Commit-Automator/cron4commit.sh
 ```
 
@@ -247,8 +248,4 @@ service cron status
 # Assume that you are in '/home/you/Automator/'
 # Filename of art is 'art.json' here, but you can change it
 python Commit-Automator/commit-automator -f art.json -x display
-
-
-# Also you can do like this:
-python Commit-Automator/commit-automator --file=art.json --execute=display
 ```
