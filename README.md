@@ -67,7 +67,7 @@ Automator <- You are here
     │   └── painter.py
     ├── examples
     │   ├── art.json.example
-    │   └── cron4commit.sh.example
+    │   └── cron.sh.example
     └── requirements.txt
 ```
 
@@ -184,13 +184,13 @@ python Commit-Automator/commit-automator -h
 #### 2. Automatically
 
 ```shell
-# Copy or move 'Commit-Automator/examples/cron4commit.sh.example'
-# to 'Commit-Automator/cron4commit.sh'
-cp Commit-Automator/examples/cron4commit.sh.exmaple Commit-Automator/cron4commit.sh
+# Copy or move 'Commit-Automator/examples/cron.sh.example'
+# to 'Commit-Automator/cron.sh'
+cp Commit-Automator/examples/cron.sh.exmaple Commit-Automator/cron.sh
 ```
 
 ```shell
-# In 'cron4commit.sh'
+# In 'cron.sh'
 
 # Whenever the paths are changed,
 # you just modify this script without running Cron restart command
@@ -215,7 +215,7 @@ cd /home/you/Automator/Auto-Commit/ && \                   # 1
 ```
 # In the Crontab editor (via '$ crontab -e')
 
-# When you get the schedule and path of 'cron4commit.sh' fixed once,
+# When you get the schedule and path of 'cron.sh' fixed once,
 # you might never worry about the changes of
 # paths of the directory of new repository, Python runtime, etc.
 # So I love this way
@@ -229,8 +229,8 @@ githubAccessToken="YourGithubAccessToken"
 
 # You have to change schedule
 # For example, '* * * * *' -> '45 23 * * *'
-# And have to change the path of 'cron4commit.sh'
-* * * * * /home/you/Automator/Commit-Automator/cron4commit.sh
+# And have to change the path of 'cron.sh'
+* * * * * /home/you/Automator/Commit-Automator/cron.sh
 ```
 
 ```shell
