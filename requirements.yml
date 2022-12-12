@@ -1,0 +1,9 @@
+name: automator
+channels:
+  - conda-forge
+dependencies:
+  - pip=22.3.1
+  - python=3.9.13
+  - pip:
+      - httpx==0.23.0
+      - numpy==1.23.5

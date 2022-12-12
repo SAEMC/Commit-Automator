@@ -68,27 +68,20 @@ Automator <- You are here
     ├── examples
     │   ├── art.json.example
     │   └── cron.sh.example
-    └── requirements.txt
+    └── requirements.yml
 ```
 
-### Create a Conda environment
+### Create a Conda environment with requirements
 
 ```shell
 # Create and activate a Conda env
-conda create -n automator python=3.9 -y && \
+conda env create --file requirements.yml && \
 conda activate automator
 
 
 # You can check the path of Python runtime
 # The path shown after run this command is used when you set Cron
 (automator) which python
-```
-
-### Install Python dependencies
-
-```shell
-# Install Python dependencies which will be saved in the Conda env
-(automator) pip install -r Commit-Automator/requirements.txt
 ```
 
 <br/>
