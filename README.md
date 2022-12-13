@@ -113,7 +113,7 @@ cp Commit-Automator/examples/art.json.exmaple Commit-Automator/art.json
 {
   "user_name": "Username",
   "art_name": "Snoopy",
-  "start_date": "2022-12-11",
+  "start_date": "2023-01-01",
   "duration": 12,
   "pixels_level": [
     [1, 1, 1, 1, 1, 1, 1],
