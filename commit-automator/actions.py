@@ -28,20 +28,26 @@ class FileAction(argparse.Action):
         _ext: str = os.path.splitext(p=values)[-1]
 
         if _ext != ".json":
-            parser.error("Extension of the art file must be '.json'!")
+            parser.error(
+                message=f"Invalid extension of file: {values}\n"
+                "Extension of the art file must be '.json'!"
+            )
 
         ### Check file exists
         if not os.path.exists(path=_art_path):
-            parser.error(f"No such file or directory: {_art_path}")
+            parser.error(
+                message=f"Invalid path of file: {_art_path}\n"
+                "No such file or directory!"
+            )
 
         ### Check keys in art file are vaild
-        _vaild_keys: list = [
+        _vaild_keys: set = {
             "user_name",
             "art_name",
             "start_date",
             "duration",
             "pixels_level",
-        ]
+        }
 
         with open(file=_art_path) as _file:
             _art_dict: dict = json.load(fp=_file)
@@ -56,7 +62,8 @@ class FileAction(argparse.Action):
 
         if _invalid_keys:
             parser.error(
-                f"{_invalid_keys[:-2]} {'are' if _invalid_count > 1 else 'is'} wrong in {values}!"
+                message=f"Invalid key{'s' if _invalid_count > 1 else ''} of '{values}': {_invalid_keys[:-2]}\n"
+                f"The keys must be {_vaild_keys}!"
             )
 
         ### Check 'start_date' is Sunday
@@ -64,25 +71,34 @@ class FileAction(argparse.Action):
         _start_day: str = datetime.strptime(_start_date, "%Y-%m-%d").strftime("%a")
 
         if _start_day != "Sun":
-            parser.error("'start_date' must start from Sunday!")
+            parser.error(
+                message=f"Invalid day of 'start_date': {_start_day}\n"
+                "'start_date' must start from Sunday!"
+            )
 
         ### Check 'duration' and 'pixels_level' are same
         _duration: int = _art_dict["duration"]
         _pixels_level: list = _art_dict["pixels_level"]
 
         if _duration != len(_pixels_level):
-            parser.error("'duration' must be same with 'pixels_level'!")
+            parser.error(
+                message=f"Invalid value of 'duration': {_duration}\n"
+                "'duration' must be same with length of 'pixels_level'!"
+            )
 
         ### Check 'pixels_level' in art file is valid
         _pixels_level: list = _art_dict["pixels_level"]
         _flatten_pixels_level: list = list(itertools.chain(*_pixels_level))
 
-        _invalid_pixels_level: list = [
+        _invalid_pixels_level: set = {
             _level for _level in _flatten_pixels_level if _level < 0 or _level > 4
-        ]
+        }
 
         if _invalid_pixels_level:
-            parser.error("The value of 'pixels_level' must be '0' ~ '4'!")
+            parser.error(
+                message=f"Invalid value of 'pixels_level': {_invalid_pixels_level}\n"
+                "The value of 'pixels_level' must be '0' ~ '4'!"
+            )
 
         setattr(namespace, self.dest, values)
         FileAction.art_data = _art_dict
