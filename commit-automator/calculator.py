@@ -47,11 +47,11 @@ def _calCommitCount(*, pixel_level: int, date_count: Union[int, None]) -> int:
 
     if date_count < 1:
         _date_level = 0
-    elif date_count < 15:
+    elif date_count < 16:
         _date_level = 1
-    elif date_count < 30:
+    elif date_count < 32:
         _date_level = 2
-    elif date_count < 45:
+    elif date_count < 47:
         _date_level = 3
     else:
         _date_level = 4
@@ -66,11 +66,11 @@ def _calCommitCount(*, pixel_level: int, date_count: Union[int, None]) -> int:
     if pixel_level == 1:
         _min_commit = 1
     elif pixel_level == 2:
-        _min_commit = 15
+        _min_commit = 16
     elif pixel_level == 3:
-        _min_commit = 30
+        _min_commit = 32
     else:
-        _min_commit = 45
+        _min_commit = 47
 
     _commit_count: int = _min_commit - date_count
 
