@@ -62,7 +62,7 @@ def main() -> None:
                 raise KeyError
         except KeyError:
             log.error(
-                f"Invalid value of '{env_name}': {access_token}\n"
+                msg=f"Invalid value of '{env_name}': {access_token}\n"
                 f"'{env_name}' must be already set in environment variables!\n\n\n"
                 "[ Manually ] Run the folowwing example command:\n\n"
                 f'  export {env_name}="YourGithubAccessToken"\n\n'
