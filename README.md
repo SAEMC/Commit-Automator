@@ -203,7 +203,7 @@ cp Commit-Automator/examples/cron.sh.exmaple Commit-Automator/cron.sh
 # 5. Saving log file is 'True' here, but you can change it
 
 cd /home/you/Automator/Auto-Commit/ && \                   # 1
-  /the/path/shown/after/running/which/python \                 # 2
+  /the/path/shown/after/running/which/python \             # 2
   /home/you/Automator/Commit-Automator/commit-automator \  # 3
   -f art.json -l                                           # 4, 5
 ```
