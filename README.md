@@ -83,7 +83,7 @@ conda activate automator
 
 
 # You can check the path of Python runtime
-# The path shown after running this command is used when you set Cron
+# The path shown after running this command is used to set Cron
 (automator) which python
 ```
 
