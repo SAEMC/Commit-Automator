@@ -8,9 +8,9 @@ This is a Commit Automator which checks number of commits needed, and then commi
 
 ### Requirements
 
-- Git and Github account
-- Python with Conda environment
-- Cron
+- [Git](https://git-scm.com/) and [Github](https://github.com/) account
+- [Python](https://www.python.org/) with [Conda](https://docs.conda.io/en/latest/) environment
+- [Cron](https://man7.org/linux/man-pages/man5/crontab.5.html)
 
 ### Set directories
 
