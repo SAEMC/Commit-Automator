@@ -1,6 +1,6 @@
 # Commit Automator
 
-This is a Commit Automator checks number of commits needed, and then commits & pushes it into your Github automatically. Also this displays how your art will look in the GitHub contribution count.
+This is a Commit Automator which checks number of commits needed, and then commits & pushes it into your Github automatically. Also this displays how your art will look in the GitHub contribution count.
 
 ---
 
@@ -28,7 +28,8 @@ git clone https://github.com/SAEMC/Commit-Automator.git
 mkdir Auto-Commit && cd Auto-Commit/
 
 
-# Notice that you had to create new remote repository in Github first
+# Notice that you've already had to create
+# new remote repository in Github first
 # (Enter your Github username below)
 echo "# Auto-Commit" >> README.md
 git init
@@ -75,12 +76,14 @@ Automator <- You are here
 
 ```shell
 # Create and activate a Conda env
+# The name of env name is 'automator' by default,
+# but you can change the name to whatever you want to
 conda env create --file requirements.yml && \
 conda activate automator
 
 
 # You can check the path of Python runtime
-# The path shown after run this command is used when you set Cron
+# The path shown after running this command is used when you set Cron
 (automator) which python
 ```
 
@@ -104,7 +107,7 @@ cp Commit-Automator/examples/art.json.exmaple Commit-Automator/art.json
 # 2. 'art_name' is name of art
 #    I've set 'Snoopy' for example
 # 3. 'start_date' must start from Sunday
-# 4. 'duration' is a cycle of painting your art
+# 4. 'duration' is a cycle(periods) of painting your art
 #    'duration' and length of 'pixels_level' must be same
 # 5. 'pixels_level' is color depth from 0 to 4
 #    You can see contirbution count color in Github profile page
@@ -161,7 +164,7 @@ python Commit-Automator/commit-automator -h
 #### 1. Manually
 
 ```shell
-# 'githubAccessToken' must be already set in environment variables
+# 'githubAccessToken' has had to be already set in environment variables
 (automator) export githubAccessToken="YourGithubAccessToken"
 
 
@@ -200,7 +203,7 @@ cp Commit-Automator/examples/cron.sh.exmaple Commit-Automator/cron.sh
 # 5. Saving log file is 'True' here, but you can change it
 
 cd /home/you/Automator/Auto-Commit/ && \                   # 1
-  /the/path/shown/after/run/which/python \                 # 2
+  /the/path/shown/after/running/which/python \                 # 2
   /home/you/Automator/Commit-Automator/commit-automator \  # 3
   -f art.json -l                                           # 4, 5
 ```
@@ -216,11 +219,11 @@ cd /home/you/Automator/Auto-Commit/ && \                   # 1
 ...
 
 
-# 'githubAccessToken' must be already set in environment variables
+# 'githubAccessToken' has had to be already set in environment variables
 githubAccessToken="YourGithubAccessToken"
 
 
-# You have to change schedule
+# You have to change this schedule
 # For example, '59 23 * * *' or '1 0 * * *'
 # And have to change the path of 'cron.sh'
 * * * * * /home/you/Automator/Commit-Automator/cron.sh

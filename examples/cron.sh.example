@@ -5,6 +5,6 @@
 #!/bin/bash
 
 cd /home/you/Automator/Auto-Commit/ && \
-  /the/path/shown/after/run/which/python \
+  /the/path/shown/after/running/which/python \
 	/home/you/Automator/Commit-Automator/commit-automator \
 	-f art.json -l
