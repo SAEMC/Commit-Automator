@@ -159,7 +159,7 @@ python Commit-Automator/commit-automator -f FilenameOfArt [-x {commit,display}] 
 python Commit-Automator/commit-automator -h
 ```
 
-### Use Commit-Automator with `commit`
+### How to use Commit-Automator with `commit`
 
 #### 1. Manually
 
@@ -238,7 +238,7 @@ service cron restart
 service cron status
 ```
 
-### Use Commit-Automator with `display`
+### How to use Commit-Automator with `display`
 
 ```shell
 # Assume that you are in '/home/you/Automator/'
