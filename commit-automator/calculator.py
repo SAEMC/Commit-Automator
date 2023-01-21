@@ -2,9 +2,9 @@
 # Author: SAEMC
 # Date: 2022-12-07
 
-from typing import Union
 import itertools
 import sys
+from typing import Union
 
 from logger import log
 

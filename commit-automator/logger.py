@@ -2,9 +2,8 @@
 # Author: SAEMC
 # Date: 2022-12-09
 
-from pathlib import Path
 import logging
-
+from pathlib import Path
 
 log: logging.Logger = logging.getLogger(name="automator")
 log.setLevel(level=logging.INFO)

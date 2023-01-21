@@ -3,7 +3,6 @@
 # Date: 2022-12-07
 
 import numpy as np
-
 from logger import log
 
 

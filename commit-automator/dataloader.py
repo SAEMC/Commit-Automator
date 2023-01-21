@@ -6,7 +6,6 @@ import itertools
 import sys
 
 import httpx
-
 from logger import log
 
 

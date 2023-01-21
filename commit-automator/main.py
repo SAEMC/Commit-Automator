@@ -2,10 +2,10 @@
 # Author: SAEMC
 # Date: 2022-12-07
 
-from typing import Union
 import argparse
 import os
 import sys
+from typing import Union
 
 from __version__ import __version__
 from actions import FileAction
