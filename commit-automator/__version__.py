@@ -2,4 +2,4 @@
 # Author: SAEMC
 # Date: 2022-12-07
 
-__version__ = "1.0.0"
+__version__: str = "1.0.0"
