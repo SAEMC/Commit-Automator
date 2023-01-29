@@ -1,6 +1,6 @@
 # Commit Automator
 
-This is a Commit Automator which checks number of commits needed, and then commits & pushes it into your Github automatically. Also this displays how your art will look in the GitHub contribution count.
+This Commit Automator which checks number of commits needed, and then commits & pushes it(them) into your Github automatically. Also this displays how your art will look your contribution counts in overview tab of Github.
 
 ---
 
