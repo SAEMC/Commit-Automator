@@ -21,31 +21,26 @@ mkdir Automator && cd Automator/
 
 
 # Clone this repository
-git clone https://github.com/SAEMC/Commit-Automator.git
-
-
-# Create a directory for new repository
-mkdir Auto-Commit && cd Auto-Commit/
+# And create a directory for new repository
+git clone https://github.com/SAEMC/Commit-Automator.git && \
+mkdir Auto-Commit
 
 
 # Notice that you've already had to create
 # new remote repository in Github first
 # (Enter your Github username below)
-echo "# Auto-Commit" >> README.md
-git init
-git add README.md
-git commit -m "first commit"
-git branch -M main
-git remote add origin https://github.com/YourGithubUsername/Auto-Commit.git
-git push -u origin main
-
-
-# You must be in '/home/you/Automator/'
-cd ..
+echo "# Auto-Commit" >> Auto-Commit/README.md
+git -C AutoCommit/ init
+git -C AutoCommit/ add README.md
+git -C AutoCommit/ commit -m "first commit"
+git -C AutoCommit/ branch -M main
+git -C AutoCommit/ remote add origin https://github.com/YourGithubUsername/Auto-Commit.git
+git -C AutoCommit/ push -u origin main
 ```
 
 ```
 # Now structure looks like:
+# You must be in '/home/you/Automator/'
 Automator <- You are here
 ├── Auto-Commit
 │   └── README.md
