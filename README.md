@@ -39,8 +39,8 @@ git -C AutoCommit/ push -u origin main
 ```
 
 ```
-# Now structure looks like:
-# You must be in '/home/you/Automator/'
+# Now structure looks like below
+# And you must be in '/home/you/Automator/':
 Automator <- You are here
 ├── Auto-Commit
 │   └── README.md
