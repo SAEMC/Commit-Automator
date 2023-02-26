@@ -78,7 +78,7 @@ Automator <- You are here
 # Create and activate a Conda env
 # The name of env name is 'automator' by default,
 # but you can change the name to whatever you want to
-conda env create --file requirements.yml && \
+conda env create --file Commit-Automator/requirements.yml && \
 conda activate automator
 
 
