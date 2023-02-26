@@ -96,7 +96,7 @@ conda activate automator
 ```shell
 # Copy or move 'Commit-Automator/examples/art.json.example'
 # to 'Commit-Automator/art.json'
-cp Commit-Automator/examples/art.json.exmaple Commit-Automator/art.json
+cp Commit-Automator/examples/art.json.example Commit-Automator/art.json
 ```
 
 ```
