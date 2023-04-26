@@ -6,7 +6,7 @@ import numpy as np
 from logger import log
 
 
-def displayArt(*, art_data: dict) -> None:
+def display_art(*, art_data: dict) -> None:
     _colors: list = [
         ### 4-bit Colors
         "\033[97m",  # Bright White

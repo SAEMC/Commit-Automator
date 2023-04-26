@@ -21,7 +21,7 @@ _stream_handler.setFormatter(fmt=_formatter)
 log.addHandler(hdlr=_stream_handler)
 
 
-def saveLog() -> None:
+def save_log() -> None:
     _parent_dir: Path = Path(__file__).parents[1].absolute()
     _log_path: Path = _parent_dir / "automator.log"
 

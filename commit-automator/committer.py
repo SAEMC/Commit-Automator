@@ -8,7 +8,7 @@ import sys
 from logger import log
 
 
-def commitAndPush(*, commit_count: int) -> None:
+def commit_and_push(*, commit_count: int) -> None:
     try:
         _lines: str = f""
 

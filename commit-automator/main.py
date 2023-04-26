@@ -9,11 +9,11 @@ from typing import Union
 
 from __version__ import __version__
 from actions import FileAction
-from calculator import getCommitCount
-from committer import commitAndPush
-from dataloader import getGithubData
-from logger import log, saveLog
-from painter import displayArt
+from calculator import get_commit_count
+from committer import commit_and_push
+from dataloader import get_github_data
+from logger import log, save_log
+from painter import display_art
 
 
 def main() -> None:
@@ -47,7 +47,7 @@ def main() -> None:
     args: argparse.Namespace = parser.parse_args()
 
     if args.is_save_log:
-        saveLog()
+        save_log()
 
     art_data: dict = FileAction.art_data
 
@@ -74,15 +74,15 @@ def main() -> None:
             sys.exit(1)
 
         user_name: str = art_data["user_name"]
-        github_data: dict = getGithubData(
+        github_data: dict = get_github_data(
             user_name=user_name, access_token=access_token
         )
-        commit_count: int = getCommitCount(art_data=art_data, github_data=github_data)
+        commit_count: int = get_commit_count(art_data=art_data, github_data=github_data)
 
-        commitAndPush(commit_count=commit_count)
+        commit_and_push(commit_count=commit_count)
 
     if args.execute == "display":
-        displayArt(art_data=art_data)
+        display_art(art_data=art_data)
 
 
 if __name__ == "__main__":

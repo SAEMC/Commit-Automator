@@ -9,7 +9,7 @@ import httpx
 from logger import log
 
 
-def getGithubData(*, user_name: str, access_token: str) -> dict:
+def get_github_data(*, user_name: str, access_token: str) -> dict:
     with httpx.Client() as _client:
         _url: str = "https://api.github.com/graphql"
         _headers: dict = {
