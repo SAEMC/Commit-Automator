@@ -61,7 +61,11 @@ def _cal_commit_count(*, pixel_level: int, date_count: Union[int, None]) -> int:
     return _commit_count
 
 
-def get_commit_count(*, art_data: dict, github_data: dict) -> int:
+def get_commit_count(
+    *,
+    art_data: dict[str, Union[str, int, list[list[int]]]],
+    github_data: dict[str, int],
+) -> int:
     _today: str = art_data["today"]
     _date_delta: int = art_data["date_delta"]
 

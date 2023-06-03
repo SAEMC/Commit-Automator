@@ -2,11 +2,13 @@
 # Author: SAEMC
 # Date: 2022-12-07
 
+from typing import Union
+
 import numpy as np
 from logger import log
 
 
-def display_art(*, art_data: dict) -> None:
+def display_art(*, art_data: dict[str, Union[str, int, list[list[int]]]]) -> None:
     _colors: list = [
         ### 4-bit Colors
         "\033[97m",  # Bright White

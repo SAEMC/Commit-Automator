@@ -9,10 +9,10 @@ import httpx
 from logger import log
 
 
-def get_github_data(*, user_name: str, access_token: str) -> dict:
+def get_github_data(*, user_name: str, access_token: str) -> dict[str, int]:
     with httpx.Client() as _client:
         _url: str = "https://api.github.com/graphql"
-        _headers: dict = {
+        _headers: dict[str, str] = {
             "Content-Type": "application/graphql",
             "Authorization": "Bearer " + access_token,
         }
@@ -44,7 +44,7 @@ def get_github_data(*, user_name: str, access_token: str) -> dict:
                 _values for _element in _result for _values in _element.values()
             ]
             _contribution_days: list = list(itertools.chain(*_contribution_days))
-            _github_data: dict = {
+            _github_data: dict[str, int] = {
                 _element.get("date"): int(_element.get("contributionCount"))
                 for _element in _contribution_days
                 if _element.get("date")

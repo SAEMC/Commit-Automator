@@ -49,7 +49,7 @@ def main() -> None:
     if _args.is_save_log:
         save_log()
 
-    _art_data: dict = FileAction.art_data
+    _art_data: dict[str, Union[str, int, list[list[int]]]] = FileAction.art_data
 
     if _args.execute == "commit":
         _env_name: str = "githubAccessToken"
@@ -74,7 +74,7 @@ def main() -> None:
             sys.exit(1)
 
         _user_name: str = _art_data["user_name"]
-        _github_data: dict = get_github_data(
+        _github_data: dict[str, int] = get_github_data(
             user_name=_user_name, access_token=_access_token
         )
         _commit_count: int = get_commit_count(
