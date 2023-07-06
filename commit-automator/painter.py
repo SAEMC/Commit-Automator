@@ -9,7 +9,7 @@ from logger import log
 
 
 def display_art(*, art_data: dict[str, Union[str, int, list[list[int]]]]) -> None:
-    _colors: list = [
+    _colors: list[str] = [
         ### 4-bit Colors
         "\033[97m",  # Bright White
         "\033[93m",  # Bright Yellow
@@ -21,7 +21,7 @@ def display_art(*, art_data: dict[str, Union[str, int, list[list[int]]]]) -> Non
     _user_name: str = art_data["user_name"]
     _art_name: str = art_data["art_name"]
     _duration: int = art_data["duration"]
-    _pixels_level: list = art_data["pixels_level"]
+    _pixels_level: list[list[int]] = art_data["pixels_level"]
     _pixels_level_t: np.ndarray = np.array(_pixels_level).T
 
     _lines: str = f""

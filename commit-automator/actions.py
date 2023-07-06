@@ -41,7 +41,7 @@ class FileAction(argparse.Action):
             )
 
         ### Check keys in art file are vaild
-        _vaild_keys: set = {
+        _vaild_keys: set[str] = {
             "user_name",
             "art_name",
             "start_date",
@@ -78,7 +78,7 @@ class FileAction(argparse.Action):
 
         ### Check 'duration' and 'pixels_level' are same
         _duration: int = _art_dict["duration"]
-        _pixels_level: list = _art_dict["pixels_level"]
+        _pixels_level: list[list[int]] = _art_dict["pixels_level"]
 
         if _duration != len(_pixels_level):
             parser.error(
@@ -87,10 +87,10 @@ class FileAction(argparse.Action):
             )
 
         ### Check 'pixels_level' is valid
-        _pixels_level: list = _art_dict["pixels_level"]
-        _flatten_pixels_level: list = list(itertools.chain(*_pixels_level))
+        _pixels_level: list[list[int]] = _art_dict["pixels_level"]
+        _flatten_pixels_level: list[int] = list(itertools.chain(*_pixels_level))
 
-        _invalid_pixels_level: set = {
+        _invalid_pixels_level: set[int] = {
             _level for _level in _flatten_pixels_level if _level < 0 or _level > 4
         }
 

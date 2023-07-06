@@ -9,8 +9,8 @@ from typing import Union
 from logger import log
 
 
-def _cal_pixel_level(*, date_delta: int, pixels_level: list) -> int:
-    _flatten_pixels_level: list = list(itertools.chain(*pixels_level))
+def _cal_pixel_level(*, date_delta: int, pixels_level: list[list[int]]) -> int:
+    _flatten_pixels_level: list[int] = list(itertools.chain(*pixels_level))
     _total_pixels: int = len(_flatten_pixels_level)
     _pixel_idx: int = date_delta % _total_pixels
     _pixel_level: int = _flatten_pixels_level[_pixel_idx]
@@ -69,7 +69,7 @@ def get_commit_count(
     _today: str = art_data["today"]
     _date_delta: int = art_data["date_delta"]
 
-    _pixels_level: list = art_data["pixels_level"]
+    _pixels_level: list[list[int]] = art_data["pixels_level"]
     _pixel_level: int = _cal_pixel_level(
         date_delta=_date_delta, pixels_level=_pixels_level
     )
