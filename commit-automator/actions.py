@@ -88,10 +88,10 @@ class FileAction(argparse.Action):
 
         ### Check 'pixels_level' is valid
         _pixels_level: list[list[int]] = _art_dict["pixels_level"]
-        _flatten_pixels_level: list[int] = list(itertools.chain(*_pixels_level))
+        _flattened_pixels_level: list[int] = list(itertools.chain(*_pixels_level))
 
         _invalid_pixels_level: set[int] = {
-            _level for _level in _flatten_pixels_level if _level < 0 or _level > 4
+            _level for _level in _flattened_pixels_level if _level < 0 or _level > 4
         }
 
         if _invalid_pixels_level:

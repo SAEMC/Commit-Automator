@@ -10,10 +10,10 @@ from logger import log
 
 
 def _cal_pixel_level(*, date_delta: int, pixels_level: list[list[int]]) -> int:
-    _flatten_pixels_level: list[int] = list(itertools.chain(*pixels_level))
-    _total_pixels: int = len(_flatten_pixels_level)
+    _flattened_pixels_level: list[int] = list(itertools.chain(*pixels_level))
+    _total_pixels: int = len(_flattened_pixels_level)
     _pixel_idx: int = date_delta % _total_pixels
-    _pixel_level: int = _flatten_pixels_level[_pixel_idx]
+    _pixel_level: int = _flattened_pixels_level[_pixel_idx]
 
     return _pixel_level
 
