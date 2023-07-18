@@ -13,6 +13,7 @@ def _calculate_pixel_level(*, date_delta: int, pixels_level: list[list[int]]) ->
     _flattened_pixels_level: list[int] = list(itertools.chain(*pixels_level))
     _total_pixels: int = len(_flattened_pixels_level)
     _pixel_idx: int = date_delta % _total_pixels
+
     pixel_level: int = _flattened_pixels_level[_pixel_idx]
 
     return pixel_level
