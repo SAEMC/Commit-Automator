@@ -76,6 +76,7 @@ def get_commit_count(
     )
 
     _date_count: Union[int, None] = github_data.get(_today, None)
+
     log.info(msg=f"{'Commits in Github:':<20} {_date_count}\n")
 
     commit_count: int = _calculate_commit_count(
