@@ -13,9 +13,9 @@ def _calculate_pixel_level(*, date_delta: int, pixels_level: list[list[int]]) ->
     _flattened_pixels_level: list[int] = list(itertools.chain(*pixels_level))
     _total_pixels: int = len(_flattened_pixels_level)
     _pixel_idx: int = date_delta % _total_pixels
-    _pixel_level: int = _flattened_pixels_level[_pixel_idx]
+    pixel_level: int = _flattened_pixels_level[_pixel_idx]
 
-    return _pixel_level
+    return pixel_level
 
 
 def _calculate_commit_count(*, pixel_level: int, date_count: Union[int, None]) -> int:
@@ -56,9 +56,9 @@ def _calculate_commit_count(*, pixel_level: int, date_count: Union[int, None]) -
     else:
         _min_commit = 47
 
-    _commit_count: int = _min_commit - date_count
+    commit_count: int = _min_commit - date_count
 
-    return _commit_count
+    return commit_count
 
 
 def get_commit_count(
@@ -76,9 +76,11 @@ def get_commit_count(
 
     _date_count: Union[int, None] = github_data.get(_today, None)
     log.info(msg=f"{'Commits in Github:':<20} {_date_count}\n")
-    _commit_count: int = _calculate_commit_count(
+
+    commit_count: int = _calculate_commit_count(
         pixel_level=_pixel_level, date_count=_date_count
     )
-    log.info(msg=f"{'Need to commit more:':<20} {_commit_count}\n")
 
-    return _commit_count
+    log.info(msg=f"{'Need to commit more:':<20} {commit_count}\n")
+
+    return commit_count

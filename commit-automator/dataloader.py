@@ -51,13 +51,14 @@ def get_github_data(*, user_name: str, access_token: str) -> dict[str, int]:
             _contribution_days: list[dict[str, Union[int, str]]] = list(
                 itertools.chain(*_contribution_days)
             )
-            _github_data: dict[str, int] = {
+
+            github_data: dict[str, int] = {
                 _element.get("date"): int(_element.get("contributionCount"))
                 for _element in _contribution_days
                 if _element.get("date")
             }
 
-            return _github_data
+            return github_data
         else:
             raise ValueError(f"'response' is {_response.text}!")
     except ValueError as _e:
