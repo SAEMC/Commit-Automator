@@ -60,6 +60,6 @@ def get_github_data(*, user_name: str, access_token: str) -> dict[str, int]:
             return _github_data
         else:
             raise ValueError(f"'response' is {_response.text}!")
-    except ValueError as e:
-        log.error(msg=e)
+    except ValueError as _e:
+        log.error(msg=_e)
         sys.exit(1)
