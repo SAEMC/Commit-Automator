@@ -115,5 +115,6 @@ class FileAction(argparse.Action):
         _art_dict["today"] = _today
         _art_dict["date_delta"] = _date_delta
 
+        ### Set class attributes
         setattr(namespace, self.dest, values)
         FileAction.art_data = _art_dict
