@@ -34,6 +34,7 @@ def main() -> None:
         "--execute",
         choices=["commit", "display"],
         default="commit",
+        dest="execute",
         help="Execute Commit or Display. Default is 'commit'.",
     )
     _parser.add_argument(
