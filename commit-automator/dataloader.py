@@ -104,9 +104,11 @@ def get_github_data(*, user_name: str, access_token: str) -> dict[str, int]:
             )
 
             github_data: dict[str, int] = {
-                _element.get("date"): int(_element.get("contributionCount"))
-                for _element in _flattened_contribution_days
-                if _element.get("date")
+                _contribution_day.get("date"): int(
+                    _contribution_day.get("contributionCount")
+                )
+                for _contribution_day in _flattened_contribution_days
+                if _contribution_day.get("date")
             }
 
             return github_data
