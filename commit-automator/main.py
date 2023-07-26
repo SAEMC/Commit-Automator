@@ -2,9 +2,9 @@
 # Author: SAEMC
 # Date: 2022-12-07
 
-import argparse
 import os
 import sys
+from argparse import ArgumentParser, Namespace
 from typing import Union
 
 from __version__ import __version__
@@ -17,7 +17,7 @@ from painter import display_art
 
 
 def main() -> None:
-    _parser: argparse.ArgumentParser = argparse.ArgumentParser(
+    _parser: ArgumentParser = ArgumentParser(
         prog="commit-automator",
         description="Check number of commits needed, and then commit & push it automatically.",
     )
@@ -45,7 +45,7 @@ def main() -> None:
         dest="is_save_log",
         help="Save log file 'automator.log'. Default is 'False'.",
     )
-    _args: argparse.Namespace = _parser.parse_args()
+    _args: Namespace = _parser.parse_args()
 
     if _args.is_save_log:
         save_log()
