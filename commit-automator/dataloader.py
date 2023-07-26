@@ -2,16 +2,16 @@
 # Author: SAEMC
 # Date: 2022-12-07
 
-import itertools
-import sys
+from itertools import chain
+from sys import exit
 from typing import Union
 
-import httpx
+from httpx import Client, Response
 from logger import log
 
 
 def get_github_data(*, user_name: str, access_token: str) -> dict[str, int]:
-    with httpx.Client() as _client:
+    with Client() as _client:
         _url: str = "https://api.github.com/graphql"
         _headers: dict[str, str] = {
             "Content-Type": "application/graphql",
@@ -33,7 +33,7 @@ def get_github_data(*, user_name: str, access_token: str) -> dict[str, int]:
         }}
         """
 
-        _response: httpx.Response = _client.post(
+        _response: Response = _client.post(
             url=_url, headers=_headers, json={"query": _body}
         )
 
@@ -100,7 +100,7 @@ def get_github_data(*, user_name: str, access_token: str) -> dict[str, int]:
                 _values for _week in _weeks for _values in _week.values()
             ]
             _flattened_contribution_days: list[dict[str, Union[int, str]]] = list(
-                itertools.chain(*_contribution_days)
+                chain(*_contribution_days)
             )
 
             github_data: dict[str, int] = {
@@ -114,4 +114,4 @@ def get_github_data(*, user_name: str, access_token: str) -> dict[str, int]:
             raise ValueError(f"'response' is {_response.text}!")
     except ValueError as _e:
         log.error(msg=_e)
-        sys.exit(1)
+        exit(1)

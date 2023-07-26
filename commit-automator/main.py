@@ -2,9 +2,9 @@
 # Author: SAEMC
 # Date: 2022-12-07
 
-import os
-import sys
 from argparse import ArgumentParser, Namespace
+from os import environ
+from sys import exit
 from typing import Union
 
 from __version__ import __version__
@@ -57,7 +57,7 @@ def main() -> None:
         _access_token: Union[str, None] = None
 
         try:
-            _access_token = os.environ[_env_name]
+            _access_token = environ[_env_name]
 
             if _access_token == "" or _access_token is None:
                 raise KeyError
@@ -72,7 +72,7 @@ def main() -> None:
                 "If you have no Github access token, see here:\n\n"
                 "  https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token"
             )
-            sys.exit(1)
+            exit(1)
 
         _user_name: str = _art_data["user_name"]
         _github_data: dict[str, int] = get_github_data(

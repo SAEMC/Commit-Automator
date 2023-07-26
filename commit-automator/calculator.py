@@ -2,15 +2,15 @@
 # Author: SAEMC
 # Date: 2022-12-07
 
-import itertools
-import sys
+from itertools import chain
+from sys import exit
 from typing import Union
 
 from logger import log
 
 
 def _calculate_pixel_level(*, date_delta: int, pixels_level: list[list[int]]) -> int:
-    _flattened_pixels_level: list[int] = list(itertools.chain(*pixels_level))
+    _flattened_pixels_level: list[int] = list(chain(*pixels_level))
     _total_pixels: int = len(_flattened_pixels_level)
     _pixel_idx: int = date_delta % _total_pixels
 
@@ -28,7 +28,7 @@ def _calculate_commit_count(*, pixel_level: int, date_count: Union[int, None]) -
             raise ValueError("Cannot find commit count in Github now.. try later.")
     except ValueError as _e:
         log.info(msg=_e)
-        sys.exit(1)
+        exit(1)
 
     if date_count < 1:
         _date_level = 0
@@ -46,7 +46,7 @@ def _calculate_commit_count(*, pixel_level: int, date_count: Union[int, None]) -
             raise ValueError("Enough today.. nothing to commit.")
     except ValueError as _e:
         log.info(msg=_e)
-        sys.exit(1)
+        exit(1)
 
     if pixel_level == 1:
         _min_commit = 1

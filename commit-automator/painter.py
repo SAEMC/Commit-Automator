@@ -4,8 +4,8 @@
 
 from typing import Union
 
-import numpy as np
 from logger import log
+from numpy import array, ndarray
 
 
 def display_art(*, art_data: dict[str, Union[int, list[list[int]], str]]) -> None:
@@ -22,7 +22,7 @@ def display_art(*, art_data: dict[str, Union[int, list[list[int]], str]]) -> Non
     _art_name: str = art_data["art_name"]
     _duration: int = art_data["duration"]
     _pixels_level: list[list[int]] = art_data["pixels_level"]
-    _pixels_level_t: np.ndarray = np.array(_pixels_level).T
+    _pixels_level_t: ndarray = array(_pixels_level).T
 
     _lines: str = f""
     _lines += f" *{'-' * (_duration * 2 + 1)}*\n"

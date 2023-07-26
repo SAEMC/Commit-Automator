@@ -2,11 +2,11 @@
 # Author: SAEMC
 # Date: 2022-12-08
 
-import itertools
-import json
-import os
 from argparse import Action, ArgumentParser, Namespace
 from datetime import datetime
+from itertools import chain
+from json import load
+from os import path
 from pathlib import Path
 from typing import Any, Sequence, Union
 
@@ -25,7 +25,7 @@ class FileAction(Action):
         _art_path: Path = _parent_dir / values
 
         ### Check extension is '.json'
-        _ext: str = os.path.splitext(p=values)[-1]
+        _ext: str = path.splitext(p=values)[-1]
 
         if _ext != ".json":
             parser.error(
@@ -34,7 +34,7 @@ class FileAction(Action):
             )
 
         ### Check file exists
-        if not os.path.exists(path=_art_path):
+        if not path.exists(path=_art_path):
             parser.error(
                 message=f"Invalid path of file: {_art_path}\n"
                 "No such file or directory!"
@@ -50,7 +50,7 @@ class FileAction(Action):
         }
 
         with open(file=_art_path) as _file:
-            _art_dict: dict[str, Union[int, list[list[int]], str]] = json.load(fp=_file)
+            _art_dict: dict[str, Union[int, list[list[int]], str]] = load(fp=_file)
 
         _invalid_keys: str = f""
         _invalid_count: int = 0
@@ -88,7 +88,7 @@ class FileAction(Action):
 
         ### Check 'pixels_level' is valid
         _pixels_level: list[list[int]] = _art_dict["pixels_level"]
-        _flattened_pixels_level: list[int] = list(itertools.chain(*_pixels_level))
+        _flattened_pixels_level: list[int] = list(chain(*_pixels_level))
 
         _invalid_pixels_level: set[int] = {
             _level for _level in _flattened_pixels_level if not (0 <= _level <= 4)

@@ -2,8 +2,8 @@
 # Author: SAEMC
 # Date: 2022-12-07
 
-import subprocess
-import sys
+from subprocess import call
+from sys import exit
 
 from logger import log
 
@@ -13,20 +13,20 @@ def commit_and_push(*, commit_count: int) -> None:
         _lines: str = f""
 
         for _count in range(commit_count):
-            subprocess.call("echo commit-automator >>commit-automator.txt", shell=True)
-            subprocess.call("git add commit-automator.txt", shell=True)
-            subprocess.call("git commit -m 'auto: run commit-automator'", shell=True)
+            call("echo commit-automator >>commit-automator.txt", shell=True)
+            call("git add commit-automator.txt", shell=True)
+            call("git commit -m 'auto: run commit-automator'", shell=True)
 
             _lines += f"Auto Commit: {_count + 1}\n"
 
-        subprocess.call("rm commit-automator.txt", shell=True)
-        subprocess.call("git add commit-automator.txt", shell=True)
-        subprocess.call("git commit -m 'auto: run commit-automator'", shell=True)
-        subprocess.call("git push", shell=True)
+        call("rm commit-automator.txt", shell=True)
+        call("git add commit-automator.txt", shell=True)
+        call("git commit -m 'auto: run commit-automator'", shell=True)
+        call("git push", shell=True)
 
         _lines += "Nice.. done."
 
         log.info(msg=_lines)
     except:
         log.error(msg="Cannot commit and push.. Something's wrong!")
-        sys.exit(1)
+        exit(1)
