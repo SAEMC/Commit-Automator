@@ -8,7 +8,7 @@ import numpy as np
 from logger import log
 
 
-def display_art(*, art_data: dict[str, Union[str, int, list[list[int]]]]) -> None:
+def display_art(*, art_data: dict[str, Union[int, list[list[int]], str]]) -> None:
     _colors: list[str] = [
         ### 4-bit Colors
         "\033[97m",  # Bright White

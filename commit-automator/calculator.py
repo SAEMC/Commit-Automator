@@ -64,7 +64,7 @@ def _calculate_commit_count(*, pixel_level: int, date_count: Union[int, None]) -
 
 def get_commit_count(
     *,
-    art_data: dict[str, Union[str, int, list[list[int]]]],
+    art_data: dict[str, Union[int, list[list[int]], str]],
     github_data: dict[str, int],
 ) -> int:
     _today: str = art_data["today"]

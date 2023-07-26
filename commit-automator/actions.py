@@ -12,7 +12,7 @@ from typing import Any, Sequence, Union
 
 
 class FileAction(argparse.Action):
-    art_data: dict[str, Union[str, int, list[list[int]]]]
+    art_data: dict[str, Union[int, list[list[int]]], str]
 
     def __call__(
         self,
@@ -50,7 +50,7 @@ class FileAction(argparse.Action):
         }
 
         with open(file=_art_path) as _file:
-            _art_dict: dict[str, Union[str, int, list[list[int]]]] = json.load(fp=_file)
+            _art_dict: dict[str, Union[int, list[list[int]], str]] = json.load(fp=_file)
 
         _invalid_keys: str = f""
         _invalid_count: int = 0

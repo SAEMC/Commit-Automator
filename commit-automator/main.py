@@ -50,7 +50,7 @@ def main() -> None:
     if _args.is_save_log:
         save_log()
 
-    _art_data: dict[str, Union[str, int, list[list[int]]]] = FileAction.art_data
+    _art_data: dict[str, Union[int, list[list[int]]], str] = FileAction.art_data
 
     if _args.execute == "commit":
         _env_name: str = "githubAccessToken"
