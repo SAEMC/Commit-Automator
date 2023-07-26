@@ -91,7 +91,7 @@ class FileAction(argparse.Action):
         _flattened_pixels_level: list[int] = list(itertools.chain(*_pixels_level))
 
         _invalid_pixels_level: set[int] = {
-            _level for _level in _flattened_pixels_level if _level < 0 or _level > 4
+            _level for _level in _flattened_pixels_level if not (0 <= _level <= 4)
         }
 
         if _invalid_pixels_level:
