@@ -39,23 +39,73 @@ def get_github_data(*, user_name: str, access_token: str) -> dict[str, int]:
 
     try:
         if _response.status_code == 200:
-            _result: list[
+            _response_json: dict[
+                str,
+                dict[
+                    str,
+                    dict[
+                        str,
+                        dict[
+                            str,
+                            dict[
+                                str,
+                                Union[
+                                    int,
+                                    list[dict[str, list[dict[str, Union[int, str]]]]],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ] = _response.json()
+            _data: dict[
+                str,
+                dict[
+                    str,
+                    dict[
+                        str,
+                        dict[
+                            str,
+                            Union[
+                                int, list[dict[str, list[dict[str, Union[int, str]]]]]
+                            ],
+                        ],
+                    ],
+                ],
+            ] = _response_json["data"]
+            _user: dict[
+                str,
+                dict[
+                    str,
+                    dict[
+                        str,
+                        Union[int, list[dict[str, list[dict[str, Union[int, str]]]]]],
+                    ],
+                ],
+            ] = _data["user"]
+            _contributions_collection: dict[
+                str,
+                dict[
+                    str, Union[int, list[dict[str, list[dict[str, Union[int, str]]]]]]
+                ],
+            ] = _user["contributionsCollection"]
+            _contribution_calendar: dict[
+                str, Union[int, list[dict[str, list[dict[str, Union[int, str]]]]]]
+            ] = _contributions_collection["contributionCalendar"]
+            _weeks: list[
                 dict[str, list[dict[str, Union[int, str]]]]
-            ] = _response.json()["data"]["user"]["contributionsCollection"][
-                "contributionCalendar"
-            ][
-                "weeks"
-            ]
+            ] = _contribution_calendar["weeks"]
+
             _contribution_days: list[list[dict[str, Union[int, str]]]] = [
-                _values for _element in _result for _values in _element.values()
+                _values for _week in _weeks for _values in _week.values()
             ]
-            _contribution_days: list[dict[str, Union[int, str]]] = list(
+            _flattened_contribution_days: list[dict[str, Union[int, str]]] = list(
                 itertools.chain(*_contribution_days)
             )
 
             github_data: dict[str, int] = {
                 _element.get("date"): int(_element.get("contributionCount"))
-                for _element in _contribution_days
+                for _element in _flattened_contribution_days
                 if _element.get("date")
             }
 
