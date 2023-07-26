@@ -2,22 +2,22 @@
 # Author: SAEMC
 # Date: 2022-12-08
 
-import argparse
 import itertools
 import json
 import os
+from argparse import Action, ArgumentParser, Namespace
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Sequence, Union
 
 
-class FileAction(argparse.Action):
+class FileAction(Action):
     art_data: dict[str, Union[int, list[list[int]]], str]
 
     def __call__(
         self,
-        parser: argparse.ArgumentParser,
-        namespace: argparse.Namespace,
+        parser: ArgumentParser,
+        namespace: Namespace,
         values: Union[str, Sequence[Any], None],
         option_string: Union[str, None] = None,
     ) -> None:
