@@ -7,7 +7,7 @@ from sys import exit
 from typing import Union
 
 from httpx import Client, Response
-from logger import log
+from logger import logger
 
 
 def get_github_data(*, user_name: str, access_token: str) -> dict[str, int]:
@@ -115,5 +115,5 @@ def get_github_data(*, user_name: str, access_token: str) -> dict[str, int]:
         else:
             raise ValueError(f"'response' is {_response.text}!")
     except ValueError as _e:
-        log.error(msg=_e)
+        logger.error(msg=_e)
         exit(1)

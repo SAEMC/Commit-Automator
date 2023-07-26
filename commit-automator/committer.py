@@ -5,7 +5,7 @@
 from subprocess import call
 from sys import exit
 
-from logger import log
+from logger import logger
 
 
 def commit_and_push(*, commit_count: int) -> None:
@@ -26,7 +26,7 @@ def commit_and_push(*, commit_count: int) -> None:
 
         _lines += "Nice.. done."
 
-        log.info(msg=_lines)
+        logger.info(msg=_lines)
     except:
-        log.error(msg="Cannot commit and push.. Something's wrong!")
+        logger.error(msg="Cannot commit and push.. Something's wrong!")
         exit(1)

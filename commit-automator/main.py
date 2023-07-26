@@ -12,7 +12,7 @@ from actions import FileAction
 from calculator import get_commit_count
 from committer import commit_and_push
 from dataloader import get_github_data
-from logger import log, save_log
+from logger import logger, save_log
 from painter import display_art
 
 
@@ -62,7 +62,7 @@ def main() -> None:
             if _access_token == "" or _access_token is None:
                 raise KeyError
         except KeyError:
-            log.error(
+            logger.error(
                 msg=f"Invalid value of '{_env_name}': {_access_token}\n"
                 f"'{_env_name}' must be already set in environment variables!\n\n\n"
                 "[ Manually ] Run the folowwing example command:\n\n"

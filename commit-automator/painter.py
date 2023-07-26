@@ -4,7 +4,7 @@
 
 from typing import Union
 
-from logger import log
+from logger import logger
 from numpy import array, ndarray
 
 
@@ -38,4 +38,4 @@ def display_art(*, art_data: dict[str, Union[int, list[list[int]], str]]) -> Non
 
     _lines += f" *{'-' * (_duration * 2 + 1)}* {_art_name} by {_user_name}"
 
-    log.info(msg=_lines)
+    logger.info(msg=_lines)

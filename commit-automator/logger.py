@@ -5,8 +5,8 @@
 from logging import INFO, FileHandler, Formatter, Logger, StreamHandler, getLogger
 from pathlib import Path
 
-log: Logger = getLogger(name="automator")
-log.setLevel(level=INFO)
+logger: Logger = getLogger(name="automator")
+logger.setLevel(level=INFO)
 
 _formatter: Formatter = Formatter(
     fmt="***** {levelname:<8} - {asctime} *****\n\n{message}\n",
@@ -18,7 +18,7 @@ _stream_handler: StreamHandler = StreamHandler()
 _stream_handler.setLevel(level=INFO)
 _stream_handler.setFormatter(fmt=_formatter)
 
-log.addHandler(hdlr=_stream_handler)
+logger.addHandler(hdlr=_stream_handler)
 
 
 def save_log() -> None:
@@ -29,4 +29,4 @@ def save_log() -> None:
     _file_handler.setLevel(level=INFO)
     _file_handler.setFormatter(fmt=_formatter)
 
-    log.addHandler(hdlr=_file_handler)
+    logger.addHandler(hdlr=_file_handler)

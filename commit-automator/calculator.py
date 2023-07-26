@@ -6,7 +6,7 @@ from itertools import chain
 from sys import exit
 from typing import Union
 
-from logger import log
+from logger import logger
 
 
 def _calculate_pixel_level(*, date_delta: int, pixels_level: list[list[int]]) -> int:
@@ -27,7 +27,7 @@ def _calculate_commit_count(*, pixel_level: int, date_count: Union[int, None]) -
         if date_count is None:
             raise ValueError("Cannot find commit count in Github now.. try later.")
     except ValueError as _e:
-        log.info(msg=_e)
+        logger.info(msg=_e)
         exit(1)
 
     if date_count < 1:
@@ -45,7 +45,7 @@ def _calculate_commit_count(*, pixel_level: int, date_count: Union[int, None]) -
         if pixel_level <= _date_level:
             raise ValueError("Enough today.. nothing to commit.")
     except ValueError as _e:
-        log.info(msg=_e)
+        logger.info(msg=_e)
         exit(1)
 
     if pixel_level == 1:
@@ -77,12 +77,12 @@ def get_commit_count(
 
     _date_count: Union[int, None] = github_data.get(_today, None)
 
-    log.info(msg=f"{'Commits in Github:':<20} {_date_count}\n")
+    logger.info(msg=f"{'Commits in Github:':<20} {_date_count}\n")
 
     commit_count: int = _calculate_commit_count(
         pixel_level=_pixel_level, date_count=_date_count
     )
 
-    log.info(msg=f"{'Need to commit more:':<20} {commit_count}\n")
+    logger.info(msg=f"{'Need to commit more:':<20} {commit_count}\n")
 
     return commit_count
