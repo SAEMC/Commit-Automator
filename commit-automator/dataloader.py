@@ -32,7 +32,6 @@ def get_github_data(*, user_name: str, access_token: str) -> dict[str, int]:
             }}
         }}
         """
-
         _response: Response = _client.post(
             url=_url, headers=_headers, json={"query": _body}
         )

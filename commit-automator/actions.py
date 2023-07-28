@@ -74,7 +74,6 @@ class FileAction(Action):
         ### Check 'start_date' is Sunday
         _start_date: str = _art_dict["start_date"]
         _start_day: str = datetime.strptime(_start_date, "%Y-%m-%d").strftime("%a")
-
         _start_day_is_not_sunday: bool = _start_day != "Sun"
 
         if _start_day_is_not_sunday:
@@ -86,7 +85,6 @@ class FileAction(Action):
         ### Check 'duration' and 'pixels_level' are same
         _duration: int = _art_dict["duration"]
         _pixels_level: list[list[int]] = _art_dict["pixels_level"]
-
         _duration_is_not_same_with_length_of_pixels_level: bool = _duration != len(
             _pixels_level
         )
@@ -100,7 +98,6 @@ class FileAction(Action):
         ### Check 'pixels_level' is valid
         _pixels_level: list[list[int]] = _art_dict["pixels_level"]
         _flattened_pixels_level: list[int] = list(chain(*_pixels_level))
-
         _invalid_pixels_level_exists: set[int] = {
             _level for _level in _flattened_pixels_level if not (0 <= _level <= 4)
         }
@@ -118,7 +115,6 @@ class FileAction(Action):
             _start_date, "%Y-%m-%d"
         )
         _date_delta: int = (_today_for_calculation - _start_date_for_calculation).days
-
         _date_delta_is_less_than_0: bool = _date_delta < 0
 
         if _date_delta_is_less_than_0:

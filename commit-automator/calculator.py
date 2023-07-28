@@ -22,7 +22,6 @@ def _calculate_pixel_level(*, date_delta: int, pixels_level: list[list[int]]) ->
 def _calculate_commit_count(*, pixel_level: int, date_count: Union[int, None]) -> int:
     _date_level: int
     _min_commit: int
-
     _date_count_is_none: bool = date_count is None
 
     try:

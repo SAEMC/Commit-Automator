@@ -46,14 +46,12 @@ def main() -> None:
         help="Save log file 'automator.log'. Default is 'False'.",
     )
     _args: Namespace = _parser.parse_args()
-
     _save_log_is_in_args: bool = _args.is_save_log
 
     if _save_log_is_in_args:
         save_log()
 
     _art_data: dict[str, Union[int, list[list[int]]], str] = FileAction.art_data
-
     _excution_is_commitment: bool = _args.execute == "commit"
     _excution_is_display: bool = _args.execute == "display"
 
@@ -63,7 +61,6 @@ def main() -> None:
 
         try:
             _access_token = environ[_env_name]
-
             _access_token_is_empty_string_or_none: bool = (
                 _access_token == "" or _access_token is None
             )
