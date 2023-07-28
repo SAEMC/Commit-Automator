@@ -47,19 +47,28 @@ def main() -> None:
     )
     _args: Namespace = _parser.parse_args()
 
-    if _args.is_save_log:
+    _save_log_is_in_args: bool = _args.is_save_log
+
+    if _save_log_is_in_args:
         save_log()
 
     _art_data: dict[str, Union[int, list[list[int]]], str] = FileAction.art_data
 
-    if _args.execute == "commit":
+    _excution_is_commitment: bool = _args.execute == "commit"
+    _excution_is_display: bool = _args.execute == "display"
+
+    if _excution_is_commitment:
         _env_name: str = "githubAccessToken"
         _access_token: Union[str, None] = None
 
         try:
             _access_token = environ[_env_name]
 
-            if _access_token == "" or _access_token is None:
+            _access_token_is_empty_string_or_none: bool = (
+                _access_token == "" or _access_token is None
+            )
+
+            if _access_token_is_empty_string_or_none:
                 raise KeyError
         except KeyError:
             logger.error(
@@ -84,7 +93,7 @@ def main() -> None:
 
         commit_and_push(commit_count=_commit_count)
 
-    if _args.execute == "display":
+    if _excution_is_display:
         display_art(art_data=_art_data)
 
 

@@ -23,36 +23,49 @@ def _calculate_commit_count(*, pixel_level: int, date_count: Union[int, None]) -
     _date_level: int
     _min_commit: int
 
+    _date_count_is_none: bool = date_count is None
+
     try:
-        if date_count is None:
+        if _date_count_is_none:
             raise ValueError("Cannot find commit count in Github now.. try later.")
     except ValueError as _e:
         logger.info(msg=_e)
         exit(1)
 
-    if date_count < 1:
+    _date_count_is_less_than_1: bool = date_count < 1
+    _date_count_is_less_than_16: bool = date_count < 16
+    _date_count_is_less_than_32: bool = date_count < 32
+    _date_count_is_less_than_47: bool = date_count < 47
+
+    if _date_count_is_less_than_1:
         _date_level = 0
-    elif date_count < 16:
+    elif _date_count_is_less_than_16:
         _date_level = 1
-    elif date_count < 32:
+    elif _date_count_is_less_than_32:
         _date_level = 2
-    elif date_count < 47:
+    elif _date_count_is_less_than_47:
         _date_level = 3
     else:
         _date_level = 4
 
+    _pixel_level_is_less_than_or_equal_to_date_level: bool = pixel_level <= _date_level
+
     try:
-        if pixel_level <= _date_level:
+        if _pixel_level_is_less_than_or_equal_to_date_level:
             raise ValueError("Enough today.. nothing to commit.")
     except ValueError as _e:
         logger.info(msg=_e)
         exit(1)
 
-    if pixel_level == 1:
+    _pixel_level_is_1: bool = pixel_level == 1
+    _pixel_level_is_2: bool = pixel_level == 2
+    _pixel_level_is_3: bool = pixel_level == 3
+
+    if _pixel_level_is_1:
         _min_commit = 1
-    elif pixel_level == 2:
+    elif _pixel_level_is_2:
         _min_commit = 16
-    elif pixel_level == 3:
+    elif _pixel_level_is_3:
         _min_commit = 32
     else:
         _min_commit = 47

@@ -37,8 +37,10 @@ def get_github_data(*, user_name: str, access_token: str) -> dict[str, int]:
             url=_url, headers=_headers, json={"query": _body}
         )
 
+    _response_status_code_is_200: bool = _response.status_code == 200
+
     try:
-        if _response.status_code == 200:
+        if _response_status_code_is_200:
             _response_json: dict[
                 str,
                 dict[
