@@ -147,11 +147,11 @@ cp Commit-Automator/examples/art.json.example Commit-Automator/art.json
 
 ```shell
 # This is default command
-python -m Commit-Automator/commit-automator -f FilenameOfArt [-x {commit,display}] [-l]
+python Commit-Automator/commit-automator -f FilenameOfArt [-x {commit,display}] [-l]
 
 
 # You'd better check helps
-python -m Commit-Automator/commit-automator -h
+python Commit-Automator/commit-automator -h
 ```
 
 ### How to use Commit-Automator with `commit`
@@ -169,7 +169,7 @@ python -m Commit-Automator/commit-automator -h
 
 # Filename of art is 'art.json' here, but you can change it
 # Saving log file is 'True' here, but you can change it
-(automator) python -m ../Commit-Automator/commit-automator -f art.json -l
+(automator) python ../Commit-Automator/commit-automator -f art.json -l
 ```
 
 #### 2. Automatically
