@@ -16,7 +16,7 @@ from logger import logger, save_log
 from painter import display_art
 
 
-def _get_parser() -> ArgumentParser:
+def main() -> None:
     _parser: ArgumentParser = ArgumentParser(
         prog="commit-automator",
         description="Check number of commits needed, and then commit & push it automatically.",
@@ -45,14 +45,7 @@ def _get_parser() -> ArgumentParser:
         dest="is_save_log",
         help="Save log file 'automator.log'. Default is 'False'.",
     )
-
-    return _parser
-
-
-def main() -> None:
-    _parser: ArgumentParser = _get_parser()
-    _namespace: Namespace = _parser.parse_args()
-    _args: AppArgParser = AppArgParser(namespace=_namespace)
+    _args: Namespace = _parser.parse_args()
 
     _save_log_is_in_args: bool = _args.is_save_log
 
