@@ -7,7 +7,8 @@ from sys import exit
 from typing import Union
 
 from httpx import Client, Response
-from logger import logger
+
+from .logger import logger
 
 
 def get_github_data(*, user_name: str, access_token: str) -> dict[str, int]:

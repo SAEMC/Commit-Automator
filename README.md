@@ -50,7 +50,7 @@ Automator <- You are here
     ├── assets
     │   ├── Snoopy.png
     │   └── Whale.png
-    ├── commit-automator
+    ├── src
     │   ├── __init__.py
     │   ├── __main__.py
     │   ├── __version__.py
@@ -147,11 +147,11 @@ cp Commit-Automator/examples/art.json.example Commit-Automator/art.json
 
 ```shell
 # This is default command
-python Commit-Automator/commit-automator -f FilenameOfArt [-x {commit,display}] [-l]
+python -m Commit-Automator.src -f FilenameOfArt [-x {commit,display}] [-l]
 
 
 # You'd better check helps
-python Commit-Automator/commit-automator -h
+python -m Commit-Automator.src -h
 ```
 
 ### How to use Commit-Automator with `commit`
@@ -169,7 +169,7 @@ python Commit-Automator/commit-automator -h
 
 # Filename of art is 'art.json' here, but you can change it
 # Saving log file is 'True' here, but you can change it
-(automator) python ../Commit-Automator/commit-automator -f art.json -l
+(automator) python -m ../Commit-Automator.src -f art.json -l
 ```
 
 #### 2. Automatically
@@ -193,13 +193,13 @@ cp Commit-Automator/examples/cron.sh.exmaple Commit-Automator/cron.sh
 # You have to change these in the following lines:
 # 1. Directory of new repository
 # 2. Path of Python runtime
-# 3. Path of commit-automator package
+# 3. Path of src package
 # 4. Filename of art is 'art.json' here, but you can change it
 # 5. Saving log file is 'True' here, but you can change it
 
 cd /home/you/Automator/Auto-Commit/ && \                   # 1
   /the/path/shown/after/running/which/python \             # 2
-  /home/you/Automator/Commit-Automator/commit-automator \  # 3
+  /home/you/Automator/Commit-Automator.src \               # 3
   -f art.json -l                                           # 4, 5
 ```
 
@@ -238,5 +238,5 @@ service cron status
 ```shell
 # Assume that you are in '/home/you/Automator/'
 # Filename of art is 'art.json' here, but you can change it
-python Commit-Automator/commit-automator -f art.json -x display
+python Commit-Automator.src -f art.json -x display
 ```

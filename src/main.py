@@ -7,16 +7,17 @@ from os import environ
 from sys import exit
 from typing import Union
 
-from __version__ import __version__
-from actions import FileAction
-from calculator import get_commit_count
-from committer import commit_and_push
-from dataloader import get_github_data
-from logger import logger, save_log
-from painter import display_art
+from .__version__ import __version__
+from .actions import FileAction
+from .argparse import AppArgParser
+from .calculator import get_commit_count
+from .committer import commit_and_push
+from .dataloader import get_github_data
+from .logger import logger, save_log
+from .painter import display_art
 
 
-def main() -> None:
+def _get_parser() -> ArgumentParser:
     _parser: ArgumentParser = ArgumentParser(
         prog="commit-automator",
         description="Check number of commits needed, and then commit & push it automatically.",
@@ -45,7 +46,15 @@ def main() -> None:
         dest="is_save_log",
         help="Save log file 'automator.log'. Default is 'False'.",
     )
-    _args: Namespace = _parser.parse_args()
+
+    return _parser
+
+
+def main() -> None:
+    _parser: ArgumentParser = _get_parser()
+    _namespace: Namespace = _parser.parse_args()
+    _args: AppArgParser = AppArgParser(namespace=_namespace)
+
     _save_log_is_in_args: bool = _args.is_save_log
 
     if _save_log_is_in_args:

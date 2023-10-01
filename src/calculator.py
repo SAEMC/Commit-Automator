@@ -6,7 +6,7 @@ from itertools import chain
 from sys import exit
 from typing import Union
 
-from logger import logger
+from .logger import logger
 
 
 def _calculate_pixel_level(*, date_delta: int, pixels_level: list[list[int]]) -> int:
