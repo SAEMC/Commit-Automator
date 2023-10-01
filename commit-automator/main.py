@@ -7,14 +7,13 @@ from os import environ
 from sys import exit
 from typing import Union
 
-from .__version__ import __version__
-from .actions import FileAction
-from .argparse import AppArgParser
-from .calculator import get_commit_count
-from .committer import commit_and_push
-from .dataloader import get_github_data
-from .logger import logger, save_log
-from .painter import display_art
+from __version__ import __version__
+from actions import FileAction
+from calculator import get_commit_count
+from committer import commit_and_push
+from dataloader import get_github_data
+from logger import logger, save_log
+from painter import display_art
 
 
 def _get_parser() -> ArgumentParser:
