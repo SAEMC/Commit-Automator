@@ -4,8 +4,9 @@
 
 from typing import Union
 
-from logger import logger
 from numpy import array, ndarray
+
+from src.logger import logger
 
 
 def display_art(*, art_data: dict[str, Union[int, list[list[int]], str]]) -> None:

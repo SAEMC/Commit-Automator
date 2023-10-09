@@ -5,7 +5,7 @@
 from subprocess import call
 from sys import exit
 
-from logger import logger
+from src.logger import logger
 
 
 def commit_and_push(*, commit_count: int) -> None:

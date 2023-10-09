@@ -7,21 +7,22 @@ from os import environ
 from sys import exit
 from typing import Union
 
-from __version__ import __version__
-from actions import FileAction
-from calculator import get_commit_count
-from committer import commit_and_push
-from dataloader import get_github_data
-from logger import logger, save_log
-from painter import display_art
+from src.__version__ import __version__
+from src.actions import FileAction
+from src.argparsers import AppArgParser
+from src.calculator import get_commit_count
+from src.committer import commit_and_push
+from src.dataloader import get_github_data
+from src.logger import logger, save_log
+from src.painter import display_art
 
 
-def main() -> None:
-    _parser: ArgumentParser = ArgumentParser(
-        prog="commit-automator",
+def _get_parser() -> ArgumentParser:
+    parser: ArgumentParser = ArgumentParser(
+        prog="src",
         description="Check number of commits needed, and then commit & push it automatically.",
     )
-    _parser.add_argument(
+    parser.add_argument(
         "-f",
         "--file",
         action=FileAction,
@@ -29,7 +30,7 @@ def main() -> None:
         required=True,
         help="Filename of art.",
     )
-    _parser.add_argument(
+    parser.add_argument(
         "-x",
         "--execute",
         choices=["commit", "display"],
@@ -37,7 +38,7 @@ def main() -> None:
         dest="execute",
         help="Execute Commit or Display. Default is 'commit'.",
     )
-    _parser.add_argument(
+    parser.add_argument(
         "-l",
         "--save-log",
         action="store_true",
@@ -45,7 +46,14 @@ def main() -> None:
         dest="is_save_log",
         help="Save log file 'automator.log'. Default is 'False'.",
     )
-    _args: Namespace = _parser.parse_args()
+
+    return parser
+
+
+def main() -> None:
+    _parser: ArgumentParser = _get_parser()
+    _namespace: Namespace = _parser.parse_args()
+    _args: AppArgParser = AppArgParser(namespace=_namespace)
 
     _save_log_is_in_args: bool = _args.is_save_log
 
