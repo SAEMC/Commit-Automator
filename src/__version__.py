@@ -2,4 +2,4 @@
 # Author: SAEMC
 # Date: 2022-12-07
 
-__version__: str = "1.1.1-231009"
+__version__: str = "1.1.2-231009"
